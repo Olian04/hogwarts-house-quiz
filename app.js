@@ -194,6 +194,7 @@ function calculateScores(answers) {
 // the URL doesn't expose tweakable numbers. Editing the token almost always
 // breaks the checksum and the link is rejected. This is light obfuscation to
 // discourage casual tampering — not security, since the logic is client-side.
+// Tokens are validated by checksum and length; anything else is rejected.
 
 const HASH_PREFIX = '#r/';
 
@@ -224,15 +225,6 @@ function encodeResults(pct) {
 function decodeResults(hash) {
   if (!hash.startsWith(HASH_PREFIX)) return null;
   const token = hash.slice(HASH_PREFIX.length);
-
-  // Backward compatibility: old plain "#r/G/H/R/S" links.
-  if (token.includes('/')) {
-    const parts = token.split('/').map(Number);
-    if (parts.length === 4 && parts.every(n => Number.isFinite(n) && n >= 0 && n <= 100)) {
-      return { G: parts[0], H: parts[1], R: parts[2], S: parts[3] };
-    }
-    return null;
-  }
 
   let bytes;
   try {
