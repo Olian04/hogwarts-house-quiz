@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Hogwarts Sorting Quiz</title>
+  <meta name="description" content="The most accurate Hogwarts house sorting quiz — questions that can't be gamed, answers that reveal what you actually value." />
+  <meta property="og:title" content="The Hogwarts Sorting Quiz" />
+  <meta property="og:description" content="20 questions designed to see past the obvious. Which house does the Sorting Hat choose for you?" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#06040f" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Starfield -->
+  <div id="particles" aria-hidden="true"></div>
+
+  <div id="app" role="main">
+
+    <!-- ═══ INTRO VIEW ═══════════════════════════════════════════════════════ -->
+    <section id="view-intro" class="view" aria-label="Quiz introduction">
+      <div class="intro-content">
+
+        <div class="crest-row" aria-hidden="true">
+          <span title="Gryffindor">🦁</span>
+          <span title="Hufflepuff">🦡</span>
+          <span title="Ravenclaw">🦅</span>
+          <span title="Slytherin">🐍</span>
+        </div>
+
+        <h1>The Sorting</h1>
+        <p class="intro-subtitle">Hogwarts House Quiz</p>
+
+        <div class="hr-ornament" aria-hidden="true"><span>✦</span></div>
+
+        <div class="intro-card">
+          <p class="card-title">A quiz that doesn't show its hand.</p>
+          <p>
+            Most sorting quizzes let you see the answer through every question —
+            four options, one obviously brave, one obviously clever, one obviously loyal,
+            one obviously cunning. You don't discover your house; you choose it.
+          </p>
+          <p>
+            This one is different. Answer honestly — not how you think a Gryffindor
+            would answer, or how you want to be seen. Answer as yourself.
+          </p>
+        </div>
+
+        <div class="intro-stats" aria-label="Quiz statistics">
+          <div class="stat-item">
+            <span class="stat-num">20</span>
+            <span class="stat-label">Questions</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">8</span>
+            <span class="stat-label">Question Types</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">4</span>
+            <span class="stat-label">Houses</span>
+          </div>
+        </div>
+
+        <button id="btn-start" class="btn-primary">
+          Begin the Sorting
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ═══ QUIZ VIEW ════════════════════════════════════════════════════════ -->
+    <section id="view-quiz" class="view" aria-label="Quiz questions">
+
+      <div class="quiz-header">
+        <div class="progress-meta">
+          <span id="question-counter" aria-live="polite">Question 1 of 20</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="progress-track">
+          <div id="progress-bar" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="quiz-body">
+        <div class="question-card" id="question-card">
+          <div class="question-type-badge" id="question-type"></div>
+          <h2 class="question-text" id="question-text"></h2>
+          <div class="answers-grid" id="answers-grid" role="list"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ═══ RESULT VIEW ══════════════════════════════════════════════════════ -->
+    <section id="view-result" class="view" aria-label="Your sorting result">
+      <!-- Populated by app.js renderResult() -->
+    </section>
+
+  </div>
+
+  <script src="quiz-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
