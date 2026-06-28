@@ -17,14 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
   route();
   window.addEventListener('hashchange', route);
   document.getElementById('btn-start').addEventListener('click', startQuiz);
+  document.getElementById('btn-error-start').addEventListener('click', startQuiz);
 });
 
 function route() {
   const hash = window.location.hash;
 
-  const decoded = decodeResults(hash);
-  if (decoded) {
-    showView('result', decoded);
+  // A result hash that fails to decode (mistyped, truncated, or tampered) gets
+  // an explanatory error page rather than silently dropping to the intro.
+  if (hash.startsWith(HASH_PREFIX)) {
+    const decoded = decodeResults(hash);
+    showView(decoded ? 'result' : 'error', decoded);
     return;
   }
 
