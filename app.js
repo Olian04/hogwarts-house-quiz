@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('hashchange', route);
   document.getElementById('btn-start').addEventListener('click', startQuiz);
   document.getElementById('btn-error-start').addEventListener('click', startQuiz);
+  document.getElementById('btn-home').addEventListener('click', goHome);
+  initResumeModal();
 });
 
 function route() {
@@ -31,17 +33,37 @@ function route() {
     return;
   }
 
-  // Restore in-progress quiz from session storage
-  const saved = sessionStorage.getItem(SS_ANSWERS);
-  const savedIdx = sessionStorage.getItem(SS_INDEX);
-  if (saved && savedIdx !== null) {
-    state.answers = JSON.parse(saved);
-    state.questionIndex = parseInt(savedIdx, 10);
+  // Restore an in-progress quiz from session storage (e.g. on refresh).
+  const saved = getSavedQuiz();
+  if (saved) {
+    state.answers = saved.answers;
+    state.questionIndex = saved.idx;
     showView('quiz');
     return;
   }
 
   showView('intro');
+}
+
+// Returns a usable in-progress quiz from session storage, or null. A quiz only
+// counts as resumable if at least one answer is saved and the index is valid.
+function getSavedQuiz() {
+  const saved = sessionStorage.getItem(SS_ANSWERS);
+  const savedIdx = sessionStorage.getItem(SS_INDEX);
+  if (saved === null || savedIdx === null) return null;
+
+  let answers;
+  try {
+    answers = JSON.parse(saved);
+  } catch (e) {
+    return null;
+  }
+  if (!answers || typeof answers !== 'object' || Object.keys(answers).length === 0) return null;
+
+  const idx = parseInt(savedIdx, 10);
+  if (isNaN(idx) || idx < 0 || idx >= QUESTIONS.length) return null;
+
+  return { answers, idx };
 }
 
 // ─── Navigation ──────────────────────────────────────────────────────────────
@@ -58,13 +80,75 @@ function showView(name, data) {
   state.view = name;
 }
 
+// Return to the start page. Any in-progress quiz is left untouched in session
+// storage so it can be resumed from the intro's start button.
+function goHome() {
+  history.pushState(null, '', window.location.pathname);
+  showView('intro');
+}
+
+// The start button. If a quiz is already underway, ask whether to resume it;
+// otherwise begin a fresh one immediately.
 function startQuiz() {
+  if (getSavedQuiz()) {
+    openResumeModal();
+    return;
+  }
+  beginFreshQuiz();
+}
+
+function beginFreshQuiz() {
   state.questionIndex = 0;
   state.answers = {};
   sessionStorage.removeItem(SS_ANSWERS);
   sessionStorage.removeItem(SS_INDEX);
   history.pushState(null, '', '#quiz');
   showView('quiz');
+}
+
+function resumeSavedQuiz() {
+  const saved = getSavedQuiz();
+  if (!saved) {
+    beginFreshQuiz();
+    return;
+  }
+  state.answers = saved.answers;
+  state.questionIndex = saved.idx;
+  history.pushState(null, '', '#quiz');
+  showView('quiz');
+}
+
+// ─── Resume modal ──────────────────────────────────────────────────────────────
+
+function initResumeModal() {
+  const modal = document.getElementById('resume-modal');
+
+  document.getElementById('modal-resume').addEventListener('click', () => {
+    closeResumeModal();
+    resumeSavedQuiz();
+  });
+  document.getElementById('modal-restart').addEventListener('click', () => {
+    closeResumeModal();
+    beginFreshQuiz();
+  });
+  // Click the backdrop (outside the card) to dismiss and stay on the intro.
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeResumeModal();
+  });
+  // Escape dismisses the modal.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeResumeModal();
+  });
+}
+
+function openResumeModal() {
+  const modal = document.getElementById('resume-modal');
+  modal.classList.add('open');
+  document.getElementById('modal-resume').focus();
+}
+
+function closeResumeModal() {
+  document.getElementById('resume-modal').classList.remove('open');
 }
 
 // ─── Quiz rendering ───────────────────────────────────────────────────────────
@@ -341,6 +425,10 @@ function renderResult(pct) {
 
       <div class="retake-section fade-in-delayed">
         <button class="btn-retake" id="btn-retake">Retake the Quiz</button>
+        <button class="btn-home result-home" id="btn-result-home" aria-label="Back to the start page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          <span>Back to start</span>
+        </button>
       </div>
     </div>
   `;
@@ -377,6 +465,9 @@ function renderResult(pct) {
     history.pushState(null, '', window.location.pathname);
     startQuiz();
   });
+
+  // Back to the start page
+  document.getElementById('btn-result-home').addEventListener('click', goHome);
 }
 
 // ─── Share URL builders ───────────────────────────────────────────────────────

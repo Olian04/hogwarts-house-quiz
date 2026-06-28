@@ -79,6 +79,10 @@
 
       <div class="quiz-header">
         <div class="progress-meta">
+          <button id="btn-home" class="btn-home" aria-label="Back to the start page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+            <span>Start</span>
+          </button>
           <span id="question-counter" aria-live="polite">Question 1 of 20</span>
         </div>
         <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="progress-track">
@@ -135,6 +139,22 @@
 
       </div>
     </section>
+
+    <!-- ═══ RESUME MODAL ═════════════════════════════════════════════════════ -->
+    <div id="resume-modal" class="modal-overlay" role="dialog" aria-modal="true"
+         aria-labelledby="resume-title" aria-describedby="resume-desc">
+      <div class="modal-card">
+        <h2 id="resume-title" class="modal-title">A Sorting Already Underway</h2>
+        <p id="resume-desc" class="modal-text">
+          The Hat remembers a sorting you began but never finished. Would you like
+          to pick up where you left off, or start over from the beginning?
+        </p>
+        <div class="modal-actions">
+          <button id="modal-resume" class="btn-primary modal-btn">Resume</button>
+          <button id="modal-restart" class="btn-secondary modal-btn">Start Over</button>
+        </div>
+      </div>
+    </div>
 
   </div>
 

@@ -360,6 +360,34 @@ body::before {
   margin-bottom: 0.5rem;
 }
 
+/* ─── Back-to-start (home) control ───────────────────────────────────────────── */
+.btn-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  cursor: pointer;
+  padding: 0.35rem 0;
+  min-height: 34px;
+  transition: opacity var(--transition), transform 0.15s ease;
+}
+.btn-home svg { width: 14px; height: 14px; }
+
+@media (hover: hover) {
+  .btn-home:hover { opacity: 1; }
+}
+.btn-home:active { opacity: 1; transform: scale(0.96); }
+
+/* On the result page the home control sits on its own line below "Retake". */
+.result-home { display: flex; margin: 1rem auto 0; }
+
 #question-counter {
   font-size: 0.75rem;
   letter-spacing: 0.15em;
@@ -904,6 +932,96 @@ body::before {
   }
 }
 .btn-retake:active {
+  background: rgba(200,148,30,0.12);
+  transform: scale(0.97);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   RESUME MODAL
+═══════════════════════════════════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: calc(1.5rem + var(--safe-top)) calc(1.5rem + var(--safe-right))
+           calc(1.5rem + var(--safe-bottom)) calc(1.5rem + var(--safe-left));
+  background: rgba(4, 2, 10, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.25s ease;
+}
+.modal-overlay.open { display: flex; }
+
+.modal-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--radius-lg);
+  padding: 1.9rem 1.6rem;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 40px rgba(200,148,30,0.12);
+  animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 4vw, 1.4rem);
+  font-weight: normal;
+  color: var(--gold-light);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.7rem;
+}
+
+.modal-text {
+  font-size: 0.95rem;
+  color: #c8b898;
+  line-height: 1.7;
+  margin-bottom: 1.6rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.modal-btn {
+  padding: 0.7rem 1.7rem;
+  min-height: 46px;
+  font-size: 0.98rem;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-glow);
+  border-radius: 50px;
+  color: var(--gold);
+  font-family: var(--font-serif);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background var(--transition), box-shadow var(--transition), transform 0.15s ease;
+}
+@media (hover: hover) {
+  .btn-secondary:hover {
+    background: rgba(200,148,30,0.08);
+    box-shadow: 0 0 15px rgba(200,148,30,0.15);
+    transform: translateY(-1px);
+  }
+}
+.btn-secondary:active {
   background: rgba(200,148,30,0.12);
   transform: scale(0.97);
 }
