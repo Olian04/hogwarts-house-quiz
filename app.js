@@ -345,12 +345,14 @@ function renderResult(pct) {
     </div>
   `;
 
-  // Animate bars
+  // Animate the bars once the leanings section has cascaded into view. Users who
+  // prefer reduced motion get the filled bars right away.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   setTimeout(() => {
     document.querySelectorAll('.bar-fill').forEach(bar => {
       bar.style.width = bar.dataset.pct + '%';
     });
-  }, 600);
+  }, reduceMotion ? 0 : 1300);
 
   // Copy button
   document.getElementById('btn-copy').addEventListener('click', () => {
