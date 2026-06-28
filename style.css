@@ -118,17 +118,18 @@ body {
   display: flex;
   justify-content: center;
   gap: clamp(0.8rem, 3vw, 2rem);
-  font-size: clamp(2rem, 6vw, 3rem);
   margin-bottom: 1.5rem;
   filter: drop-shadow(0 0 12px rgba(200,148,30,0.4));
 }
 
-.crest-row span {
+.intro-crest {
+  width: clamp(48px, 11vw, 72px);
+  height: auto;
   animation: float 4s ease-in-out infinite;
 }
-.crest-row span:nth-child(2) { animation-delay: 0.5s; }
-.crest-row span:nth-child(3) { animation-delay: 1s; }
-.crest-row span:nth-child(4) { animation-delay: 1.5s; }
+.intro-crest:nth-child(2) { animation-delay: 0.5s; }
+.intro-crest:nth-child(3) { animation-delay: 1s; }
+.intro-crest:nth-child(4) { animation-delay: 1.5s; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -449,37 +450,18 @@ body {
 }
 
 .house-crest {
-  width: clamp(200px, 45vw, 280px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 3px solid;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 1.5rem;
-  box-shadow:
-    0 0 60px rgba(0,0,0,0.8),
-    0 0 30px rgba(0,0,0,0.6),
-    inset 0 0 40px rgba(0,0,0,0.4);
-  position: relative;
+  gap: 0.75rem;
 }
 
-.house-crest::after {
-  content: '';
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 1px solid;
-  border-color: inherit;
-  opacity: 0.3;
-}
-
-.house-emoji {
-  font-size: clamp(3rem, 10vw, 5rem);
-  line-height: 1;
-  filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+.house-crest-svg {
+  width: clamp(150px, 40vw, 200px);
+  height: auto;
+  filter:
+    drop-shadow(0 8px 28px rgba(0,0,0,0.75))
+    drop-shadow(0 2px 8px rgba(0,0,0,0.5));
 }
 
 .house-name {
@@ -582,7 +564,11 @@ body {
   white-space: nowrap;
 }
 
-.bar-emoji { font-size: 1rem; }
+.bar-crest {
+  width: 22px;
+  height: auto;
+  flex-shrink: 0;
+}
 .bar-name { font-family: var(--font-serif); }
 
 .bar-track {

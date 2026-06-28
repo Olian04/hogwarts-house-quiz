@@ -211,8 +211,8 @@ function renderResult(pct) {
       <div class="sorting-hat-line">The Sorting Hat has considered…</div>
 
       <div class="house-reveal" id="house-reveal">
-        <div class="house-crest" style="background: ${house.bg}; border-color: ${house.secondary};">
-          <div class="house-emoji">${house.emoji}</div>
+        <div class="house-crest">
+          <img class="house-crest-svg" src="${house.svg}" alt="${house.name} house crest" />
           <div class="house-name" style="color: ${house.secondary};">${house.name}</div>
           <div class="house-tagline" style="color: ${house.textOnDark};">${house.tagline}</div>
         </div>
@@ -233,7 +233,7 @@ function renderResult(pct) {
           ${sorted.map(h => `
             <div class="bar-row ${h === winner ? 'bar-row--winner' : ''}">
               <div class="bar-label">
-                <span class="bar-emoji">${HOUSES[h].emoji}</span>
+                <img class="bar-crest" src="${HOUSES[h].svg}" alt="${HOUSES[h].name}" />
                 <span class="bar-name">${HOUSES[h].name}</span>
               </div>
               <div class="bar-track">
