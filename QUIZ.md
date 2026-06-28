@@ -6,9 +6,10 @@ Most sorting quizzes fail because every question is transparently house-coded: f
 
 This quiz is built around three principles:
 
-1. **No obvious mapping.** Questions reveal values through trade-offs, not labels. The Gryffindor answer isn't the one that says "be brave" — it's the one a person driven by moral conviction would actually pick.
+1. **No obvious mapping.** Questions reveal values through trade-offs, not labels. The Gryffindor answer isn't the one that says "be brave" — it's the one a person driven by moral conviction would actually pick. Answers describe the *behaviour*, never the trait that names the house.
 2. **Houses are defined by their flaws, not just their virtues.** A question that asks about your biggest weakness is more revealing than one that asks about your greatest strength.
-3. **The split-score system.** Many answers award partial points to two houses. This reflects that real people are not pure archetypes — and it makes the quiz much harder to game.
+3. **The split-score system.** Every answer awards 2 points to a primary house and 1 to a secondary. No answer belongs cleanly to a single house, which both reflects that real people aren't pure archetypes and makes the quiz much harder to game.
+4. **Randomised answer order.** The four answers are shuffled on every render, so the highest-scoring option for a given house is never in a predictable position. You can't learn the pattern by watching where the "clever" answer keeps appearing.
 
 ---
 
@@ -72,8 +73,8 @@ Slytherins have been unfairly flattened into villains. The defining quality isn'
 
 ## Question Design Principles
 
-### Avoid single-house answers
-Whenever possible, answers should award partial points to two houses. This serves two purposes: it makes the quiz harder to game (you can't be sure which answer maps to your house), and it reflects reality (a brave choice can also be strategic; a loyal choice can also be analytical).
+### No single-house answers
+Every answer awards 2 points to a primary house and 1 to a secondary — never 3 to one house alone. This serves two purposes: it makes the quiz harder to game (you can't be sure which answer maps to your house), and it reflects reality (a brave choice can also be strategic; a loyal choice can also be analytical). Within each question, every house is the primary of exactly one answer and the secondary of exactly one other, so no house is over- or under-represented.
 
 ### Use adversarial question types
 The most revealing questions force trade-offs between things all good people value:
@@ -92,15 +93,17 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 ## The Twenty Questions
 
+> Answers below are listed in primary-house order (Gryffindor, Hufflepuff, Ravenclaw, Slytherin) for readability. In the app they are **shuffled on every render**, so this ordering is never visible to the player.
+
 ### Q1 — Scenario
 **You discover that a rule you've followed your whole life was founded on a lie. Your first instinct is...**
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Anger — you feel betrayed and want to expose it, immediately. | G: 3 | Gryffindors act on moral outrage; the lie is a wrong to be righted |
-| Curiosity — you want to understand how and why the lie was created. | R: 3 | Ravenclaws lead with analysis; understanding comes before action |
-| Caution — even a false origin doesn't automatically invalidate the rule. | S: 2, H: 1 | Slytherin pragmatism (rules have value regardless of origin); Hufflepuff deference to stability |
-| Grief — you mourn the loss and think about all the others who believed it too. | H: 3 | Hufflepuffs feel outward, toward community impact first |
+| Something is wrong here, and you can already feel yourself about to be the one who says it out loud. | G: 2, H: 1 | Gryffindor moves to confront; Hufflepuff feels the wrong done to people |
+| You think first of everyone else who built their life around it, and what this will do to them. | H: 2, R: 1 | Hufflepuff feels outward to community; Ravenclaw to the implications |
+| You want the whole story — who started it, what they gained, and how it held together for so long. | R: 2, S: 1 | Ravenclaw needs to understand; Slytherin reads the power behind it |
+| A false beginning doesn't make it useless. You weigh what it's actually been doing before touching it. | S: 2, G: 1 | Slytherin pragmatism; Gryffindor still tests it against principle |
 
 ---
 
@@ -109,10 +112,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Save your friend. You can't betray someone who trusts you completely. | S: 2, H: 1 | Slytherin's fierce loyalty to chosen people; some Hufflepuff resonance |
-| Save the five. Greater suffering outweighs personal connection. | R: 2, G: 1 | Ravenclaw applies utilitarian logic; Gryffindor's moral framework includes it |
-| Exhaust every possibility of saving everyone, right up to the last second. | G: 3 | Pure Gryffindor: refuse to accept an impossible choice; act despite |
-| Save the five — and carry the grief of that choice for the rest of your life. | H: 3 | Hufflepuff does what's collectively right while absorbing the personal cost |
+| Refuse the choice and throw everything you have at saving all six, right up to the final second. | G: 2, R: 1 | Gryffindor refuses an impossible choice; Ravenclaw improvises a third option |
+| Choose the five, and quietly carry what it cost you for the rest of your life. | H: 2, S: 1 | Hufflepuff bears the collective cost; Slytherin accepts the hard call |
+| Do the arithmetic you don't want to do: five lives weigh more than one, however much it hurts. | R: 2, G: 1 | Ravenclaw applies the logic; Gryffindor's morality includes it |
+| Save the one person you'd never be able to face yourself again for abandoning. | S: 2, H: 1 | Slytherin's loyalty to chosen people; Hufflepuff's to the bond |
 
 ---
 
@@ -121,10 +124,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Submit what you have and flag the flaw transparently. Done is better than perfect. | S: 2, G: 1 | Slytherin pragmatism; Gryffindor honesty about the flaw |
-| Start over, even if it means missing the deadline. You won't submit something broken. | R: 2, H: 1 | Ravenclaw: accuracy over speed; Hufflepuff: diligence over convenience |
-| Pull an all-nighter. You're not walking away when it gets hard. | G: 2, H: 1 | Gryffindor refuses to surrender; Hufflepuff hard work ethic |
-| Step back and look for a smarter angle. There's usually a better path than brute force. | R: 2, S: 1 | Ravenclaw analytical; Slytherin strategic optimization |
+| When it gets brutal is exactly when you refuse to walk away. You'll outlast the problem. | G: 2, S: 1 | Gryffindor won't surrender; Slytherin's sheer determination |
+| You begin again without drama. Someone's relying on this, and that's reason enough to do it right. | H: 2, G: 1 | Hufflepuff diligence for those who depend on it; Gryffindor's resolve |
+| You won't put your name on something you know is built wrong. Rebuild it, deadline or not. | R: 2, H: 1 | Ravenclaw: correctness over speed; Hufflepuff: integrity in the work |
+| Step back and look for the angle nobody's tried. There's usually a path that isn't brute force. | S: 2, R: 1 | Slytherin strategic optimization; Ravenclaw analytical |
 
 ---
 
@@ -133,10 +136,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Taking credit for the team's work. | H: 3 | Hufflepuff: fairness and recognition are core values |
-| Making major decisions without fully understanding the situation. | R: 3 | Ravenclaw: ignorance-driven decisions are unconscionable |
-| Sacrificing their principles whenever it's convenient to do so. | G: 3 | Gryffindor: principled constancy is non-negotiable |
-| Failing to protect their people when it actually counts. | S: 3 | Slytherin: protecting your own is a primary obligation |
+| They bend on the things they swore they'd never bend on, the moment it's inconvenient. | G: 2, H: 1 | Gryffindor: principled constancy; Hufflepuff: broken faith |
+| They let the people who did the work fade into the background while they take the bow. | H: 2, G: 1 | Hufflepuff: fairness and credit; Gryffindor: honour |
+| They make the big call without ever really grasping what they're deciding about. | R: 2, S: 1 | Ravenclaw: ignorance is unconscionable; Slytherin: incompetence is dangerous |
+| When it actually counts, they leave their own people exposed. | S: 2, R: 1 | Slytherin: protect your own; Ravenclaw: failure of judgment |
 
 ---
 
@@ -145,22 +148,22 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Confess and apologize, immediately — even when it's uncomfortable. | G: 3 | Gryffindor: direct confrontation of wrongdoing, even your own |
-| Quietly make it right through actions rather than words. | H: 3 | Hufflepuff: repair over performance; deed over declaration |
-| Understand why you did it before deciding how to address it. | R: 3 | Ravenclaw: root-cause analysis before response |
-| Assess the full situation and find the most effective path forward. | S: 3 | Slytherin: pragmatic forward-orientation |
+| Say it out loud to whoever you wronged, before you lose the nerve. | G: 2, H: 1 | Gryffindor: direct confession; Hufflepuff: owe it to the person |
+| Skip the speech and just start putting it right where it actually landed. | H: 2, R: 1 | Hufflepuff: repair over performance; Ravenclaw: address the real effect |
+| Trace back why you did it — you can't fix what you don't understand. | R: 2, S: 1 | Ravenclaw: root-cause first; Slytherin: understand to prevent recurrence |
+| Take stock of the whole situation and find the move that actually repairs it. | S: 2, G: 1 | Slytherin: pragmatic repair; Gryffindor: make it right |
 
 ---
 
 ### Q6 — Hypothetical
-**If you could be remembered for one thing, it would be...**
+**If you could be remembered for one thing, what would you choose?**
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| A moment of extraordinary courage when everything was at stake. | G: 3 | Gryffindor legacy is the heroic act |
-| The number of lives you made genuinely better. | H: 3 | Hufflepuff legacy is collective impact |
-| A discovery or idea that changed how people understand the world. | R: 3 | Ravenclaw legacy is intellectual contribution |
-| Something you built or created that outlasted you. | S: 3 | Slytherin legacy is lasting achievement |
+| The one time you stepped forward when everyone else stepped back. | G: 2, R: 1 | Gryffindor: the decisive act; Ravenclaw: the clarity to see it mattered |
+| The quiet difference you made to people who'll never make a speech about it. | H: 2, S: 1 | Hufflepuff: unsung impact; Slytherin: lasting effect on chosen people |
+| A single idea that left the world a little clearer than you found it. | R: 2, G: 1 | Ravenclaw: intellectual contribution; Gryffindor: changing things |
+| Something you built that's still standing long after you're gone. | S: 2, H: 1 | Slytherin: lasting achievement; Hufflepuff: something that serves others |
 
 ---
 
@@ -169,10 +172,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| You act before you think. | G: 3 | Gryffindor's known shadow side: impulsiveness |
-| Being right matters so much to you that you sometimes forget to be kind. | R: 3 | Ravenclaw's shadow: truth over compassion |
-| You want success badly enough that you sometimes cut corners. | S: 3 | Slytherin's shadow: ends-justify-means thinking |
-| You put others' needs so far above your own that you hurt yourself. | H: 3 | Hufflepuff's shadow: self-neglect through over-giving |
+| You're already moving before the rest of the room has finished thinking. | G: 2, S: 1 | Gryffindor: impulsiveness; Slytherin: acting on a read before it's confirmed |
+| You'll bleed yourself dry for other people and call it normal. | H: 2, G: 1 | Hufflepuff: self-neglect; Gryffindor: throwing yourself in |
+| You'd rather be correct than gentle, and it's cost you people. | R: 2, H: 1 | Ravenclaw: truth over compassion; Hufflepuff: the relational cost |
+| You want the win enough that the 'how' gets a little flexible. | S: 2, R: 1 | Slytherin: ends-over-means; Ravenclaw: rationalizing it |
 
 ---
 
@@ -181,10 +184,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Give them 24 hours to come forward themselves — then you act. | G: 2, H: 1 | Gryffindor acts on principle but gives the friend a chance; Hufflepuff fairness |
-| Keep the secret. You gave your word, and trust is not conditional. | S: 2, H: 1 | Slytherin: loyalty to chosen people is absolute; Hufflepuff values the bond |
-| Share it, and explain your full reasoning to your friend afterward. | R: 2, G: 1 | Ravenclaw: truth must win; Gryffindor: moral conviction backs it |
-| Help your friend find a way to address the problem without breaking the confidence. | H: 2, R: 1 | Hufflepuff creative loyalty; Ravenclaw problem-solving |
+| Tell them they have until tomorrow to come forward themselves — and mean it. | G: 2, H: 1 | Gryffindor acts on principle but gives a fair chance; Hufflepuff fairness |
+| Look for the path that protects everyone without making your friend the casualty. | H: 2, G: 1 | Hufflepuff: creative loyalty; Gryffindor: refusing to abandon either duty |
+| Decide the others' safety wins, say what has to be said, and face your friend with the full why. | R: 2, S: 1 | Ravenclaw: truth must win, fully reasoned; Slytherin: clear-eyed cost |
+| Keep it. You gave your word, and that isn't something you trade away. | S: 2, R: 1 | Slytherin: loyalty to chosen people is absolute; Ravenclaw: a principle held |
 
 ---
 
@@ -193,10 +196,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Somewhere high and open — a cliff edge, a rooftop, an expanse of sky. | G: 2, R: 1 | Gryffindor: exposed, brave; Ravenclaw: perspective, overview |
-| A warm, busy space full of people who know and love you. | H: 3 | Hufflepuff: community and belonging are home |
-| A quiet library, workshop, or studio where you can lose yourself in focused work. | R: 2, S: 1 | Ravenclaw: deep focus; Slytherin: private ambition |
-| Somewhere refined and considered — beautiful craftsmanship, everything in its place. | S: 3 | Slytherin: values excellence, order, aesthetic intentionality |
+| A high, open edge with the whole landscape dropping away in front of you. | G: 2, H: 1 | Gryffindor: exposed, fearless; Hufflepuff: grounded in the world |
+| A crowded, warm kitchen where everyone's talking over everyone. | H: 2, R: 1 | Hufflepuff: belonging; Ravenclaw: the buzz of minds |
+| A still room and a long stretch of uninterrupted hours. | R: 2, S: 1 | Ravenclaw: deep focus; Slytherin: private, self-directed work |
+| A space that's exactly as you arranged it — nothing loud, nothing out of place. | S: 2, G: 1 | Slytherin: order and intention; Gryffindor: a place that's truly yours |
 
 ---
 
@@ -205,10 +208,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Freedom. | G: 2, R: 1 | Gryffindor fights for freedom from tyranny; Ravenclaw for intellectual freedom |
-| Justice. | H: 2, G: 1 | Hufflepuff: fairness as a core value; Gryffindor: fighting wrongs |
-| Truth. | R: 3 | Ravenclaw: truth is the fundamental value |
-| Safety for those you love. | S: 2, H: 1 | Slytherin: protecting inner circle; Hufflepuff: protecting community |
+| The right to choose your own path, even badly. | G: 2, R: 1 | Gryffindor: freedom from tyranny; Ravenclaw: intellectual freedom |
+| A fair shake for the people who never seem to get one. | H: 2, S: 1 | Hufflepuff: fairness; Slytherin: protecting the overlooked |
+| Knowing what's actually true, whatever it turns out to be. | R: 2, G: 1 | Ravenclaw: truth as fundamental; Gryffindor: facing it bravely |
+| A wall around the few people who are yours. | S: 2, H: 1 | Slytherin: protect the inner circle; Hufflepuff: protect your people |
 
 ---
 
@@ -217,10 +220,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Work twice as hard to genuinely earn what they assumed you had. | H: 2, G: 1 | Hufflepuff work ethic; Gryffindor refusal to retreat |
-| Come clean before it becomes a serious problem. | G: 2, R: 1 | Gryffindor honesty; Ravenclaw prefers truth over comfortable fiction |
-| Find a way to become indispensable using your actual strengths. | S: 3 | Slytherin: resourceful, strategic repositioning |
-| Study relentlessly until you've genuinely closed the gap. | R: 3 | Ravenclaw: close the knowledge gap through learning |
+| Tell them where you actually stand before it becomes a problem for anyone. | G: 2, S: 1 | Gryffindor: honesty even when costly; Slytherin: control the narrative early |
+| Put your head down and out-work the gap until you've genuinely earned the seat. | H: 2, G: 1 | Hufflepuff: work ethic; Gryffindor: refusal to retreat |
+| Disappear into the material until the gap simply isn't there anymore. | R: 2, H: 1 | Ravenclaw: close the gap by learning; Hufflepuff: diligence |
+| Quietly make yourself impossible to replace using what you're actually good at. | S: 2, R: 1 | Slytherin: strategic repositioning; Ravenclaw: leverage real strengths |
 
 ---
 
@@ -229,10 +232,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Follow it. Exceptions corrupt the rule and open the door to worse ones. | H: 2, S: 1 | Hufflepuff: fairness requires consistency; Slytherin: systems have value |
-| Break it and accept the consequences openly. | G: 3 | Gryffindor: moral conviction overrides legal constraint |
-| Find a way to technically comply while still achieving what you need. | S: 2, R: 1 | Slytherin: find the creative workaround; Ravenclaw: find the loophole |
-| Challenge it publicly. The 1% case reveals a deeper flaw that needs fixing. | R: 2, G: 1 | Ravenclaw: expose the systemic flaw; Gryffindor: fight it openly |
+| Break it in the open and take whatever comes for it. | G: 2, H: 1 | Gryffindor: conviction over legality; Hufflepuff: accept the consequences fairly |
+| Follow it anyway. Once you start carving out exceptions, the whole thing rots. | H: 2, G: 1 | Hufflepuff: fairness requires consistency; Gryffindor: holding the line |
+| Treat your case as proof the rule is broken, and go after the rule itself. | R: 2, S: 1 | Ravenclaw: expose the systemic flaw; Slytherin: change the system |
+| Find the reading of the rule that lets you do what's needed without breaking it. | S: 2, R: 1 | Slytherin: the creative workaround; Ravenclaw: the precise loophole |
 
 ---
 
@@ -241,10 +244,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Doing every terrifying thing you've been putting off. | G: 3 | Gryffindor: remove every remaining obstacle between you and courage |
-| Making sure the people you love are okay without you. | H: 3 | Hufflepuff: their wellbeing supersedes personal experience |
-| Writing, creating, or documenting everything you've learned and thought. | R: 3 | Ravenclaw: preserve and transmit knowledge |
-| Using whatever influence you have to change something that actually matters. | S: 3 | Slytherin: position your final year for maximum impact |
+| Doing all the things you were too afraid to do while there was still time to regret them. | G: 2, H: 1 | Gryffindor: face every fear; Hufflepuff: live fully among others |
+| Making sure the people you love will be steady long after you're not there. | H: 2, R: 1 | Hufflepuff: their wellbeing first; Ravenclaw: plan it carefully |
+| Getting everything you've figured out down on paper before it's gone with you. | R: 2, S: 1 | Ravenclaw: preserve knowledge; Slytherin: leave something lasting |
+| Spending every bit of leverage you have on one thing that'll outlast you. | S: 2, G: 1 | Slytherin: maximum final impact; Gryffindor: make it count |
 
 ---
 
@@ -253,10 +256,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Find one genuinely interesting person and have a real conversation. | R: 2, G: 1 | Ravenclaw: depth over breadth; Gryffindor: direct engagement |
-| Work the room — meeting new people gives you energy. | G: 2, S: 1 | Gryffindor: bold, outward; Slytherin: network-building |
-| Look for ways to be useful — refilling drinks, making introductions. | H: 3 | Hufflepuff: purpose through service to the group |
-| Observe the room for a while before deciding where to invest your attention. | S: 2, R: 1 | Slytherin: strategic assessment; Ravenclaw: read the situation first |
+| Throw yourself in — you tend to leave with more people than you arrived with. | G: 2, R: 1 | Gryffindor: bold, outward; Ravenclaw: drawn to new people and ideas |
+| Drift toward whatever needs doing — drinks refilled, the stranded person rescued. | H: 2, S: 1 | Hufflepuff: service to the group; Slytherin: quietly making yourself useful |
+| Find the one person worth talking to and stay there most of the night. | R: 2, G: 1 | Ravenclaw: depth over breadth; Gryffindor: direct, genuine engagement |
+| Hang back and read the room before you decide where to spend your energy. | S: 2, H: 1 | Slytherin: strategic assessment; Hufflepuff: finding where you fit |
 
 ---
 
@@ -265,10 +268,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Individuals who act with courage on their convictions. | G: 3 | Gryffindor's theory of change |
-| People doing small, consistent acts of genuine kindness. | H: 3 | Hufflepuff's theory of change |
-| The spread of education and honest information. | R: 3 | Ravenclaw's theory of change |
-| Capable people positioning themselves to actually drive real change. | S: 3 | Slytherin's theory of change |
+| A few people willing to act on what they believe when it's costly to do so. | G: 2, S: 1 | Gryffindor: courageous individuals; Slytherin: the willing few who move |
+| Ordinary people doing small, decent things, over and over. | H: 2, G: 1 | Hufflepuff: consistent kindness; Gryffindor: doing right daily |
+| More people knowing more true things. | R: 2, H: 1 | Ravenclaw: education; Hufflepuff: lifting everyone equally |
+| Capable people getting themselves to where the real decisions are made. | S: 2, R: 1 | Slytherin: positioning for change; Ravenclaw: competence in power |
 
 ---
 
@@ -277,10 +280,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Motivated to prove them wrong — publicly. | G: 2, S: 1 | Gryffindor: public vindication; some Slytherin strategic drive |
-| Quietly certain of your own worth. Their opinion changes nothing. | H: 2, R: 1 | Hufflepuff: grounded self-worth; Ravenclaw: independent of others' judgments |
-| Curious about what's shaping their perception of you. | R: 2, H: 1 | Ravenclaw: analyze the situation; Hufflepuff: empathetic inquiry |
-| Like you've been handed a useful strategic advantage. | S: 3 | Slytherin: weaponize low expectations |
+| A pull to prove them wrong somewhere everyone can see it. | G: 2, H: 1 | Gryffindor: public vindication; Hufflepuff: wanting to be seen truly |
+| Unbothered. What they think doesn't touch what you know about yourself. | H: 2, G: 1 | Hufflepuff: grounded self-worth; Gryffindor: quiet certainty |
+| Curious about what's making them read you that way. | R: 2, S: 1 | Ravenclaw: analyze the perception; Slytherin: study the misread |
+| Faintly pleased — being underestimated is a head start. | S: 2, R: 1 | Slytherin: weaponize low expectations; Ravenclaw: see the advantage |
 
 ---
 
@@ -289,10 +292,10 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| A spark — you ignite things. | G: 3 | Gryffindor: the catalyst, the initiator |
-| A foundation — you hold things up. | H: 3 | Hufflepuff: the stabilizer, the sustainer |
-| A lens — you help people see more clearly. | R: 3 | Ravenclaw: the clarifier, the illuminator |
-| A current — you move things in a direction. | S: 3 | Slytherin: the force that shapes outcomes |
+| The push that gets something moving when it's stuck. | G: 2, H: 1 | Gryffindor: the catalyst; Hufflepuff: the one who helps it along |
+| The thing underneath that keeps it all from falling. | H: 2, R: 1 | Hufflepuff: the foundation; Ravenclaw: the load-bearing structure |
+| The one who finally makes the blurry thing make sense. | R: 2, S: 1 | Ravenclaw: the clarifier; Slytherin: the one who sees the real shape |
+| The steady pull that keeps things heading somewhere. | S: 2, G: 1 | Slytherin: the directional force; Gryffindor: the momentum |
 
 ---
 
@@ -301,22 +304,22 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Strangers who sense your presence before knowing your story. | S: 2, G: 1 | Slytherin: gravitas and reputation; Gryffindor: presence and bearing |
-| Your closest friends, who know everything about you. | H: 3 | Hufflepuff: authentic connection over surface impression |
-| People whose minds you genuinely admire. | R: 3 | Ravenclaw: peer recognition from intellectual equals |
-| People who haven't been born yet — through what you leave behind. | G: 2, R: 1 | Gryffindor: legacy as moral act; Ravenclaw: legacy as intellectual contribution |
+| People you'll never meet, decades from now, because of something you did. | G: 2, R: 1 | Gryffindor: legacy as a moral act; Ravenclaw: lasting contribution |
+| The people who were there before any of this, and would be there after. | H: 2, S: 1 | Hufflepuff: enduring bonds; Slytherin: the loyal chosen few |
+| The few people whose opinion you'd actually change your mind for. | R: 2, G: 1 | Ravenclaw: respect from those you respect; Gryffindor: earned, honest regard |
+| Strangers who take you seriously before you've said a word. | S: 2, H: 1 | Slytherin: gravitas and reputation; Hufflepuff: being trusted on sight |
 
 ---
 
 ### Q19 — Scenario
-**A beloved mentor asks for your honest opinion on their work, which you privately think has serious problems. You...**
+**A beloved mentor asks your honest opinion on their work, which you privately think has serious problems. You...**
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Give your full, honest assessment. They deserve the truth. | G: 2, R: 1 | Gryffindor: direct honesty even when difficult; Ravenclaw: truth serves them better |
-| Lead with genuine strengths, then address the concerns with real care. | H: 3 | Hufflepuff: truth delivered with compassion |
-| Ask questions that might lead them to see the issues themselves. | R: 2, S: 1 | Ravenclaw: Socratic method; Slytherin: indirect approach |
-| Consider what they actually need from this conversation versus what's technically true. | S: 2, H: 1 | Slytherin: situationally intelligent response; Hufflepuff: attunement to need |
+| Give it to them straight. Softening it would be its own kind of disrespect. | G: 2, S: 1 | Gryffindor: direct honesty; Slytherin: respect through candor |
+| Start with what genuinely works, then raise the hard parts with care. | H: 2, G: 1 | Hufflepuff: truth with compassion; Gryffindor: still telling it |
+| Ask the questions that'll walk them to the problem themselves. | R: 2, H: 1 | Ravenclaw: the Socratic route; Hufflepuff: a gentle path |
+| Read what they're really after here before you decide how much to say. | S: 2, R: 1 | Slytherin: situational intelligence; Ravenclaw: model their actual need |
 
 ---
 
@@ -325,37 +328,50 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | House Points | Rationale |
 |--------|-------------|-----------|
-| Being someone who acts, even when you're afraid. | G: 3 | The Gryffindor definition of courage |
-| Being someone who shows up, even when it's thankless. | H: 3 | The Hufflepuff definition of dedication |
-| Being someone who understands, even when the truth is hard. | R: 3 | The Ravenclaw definition of wisdom |
-| Being someone who achieves, regardless of what stands in the way. | S: 3 | The Slytherin definition of determination |
+| Not letting fear be the thing that decides what you do. | G: 2, H: 1 | The Gryffindor definition of courage; Hufflepuff steadiness |
+| Being someone who keeps showing up when no one's keeping score. | H: 2, G: 1 | The Hufflepuff definition of dedication; Gryffindor constancy |
+| Seeing things as they really are, even when it isn't comforting. | R: 2, S: 1 | The Ravenclaw definition of wisdom; Slytherin clear-sightedness |
+| Getting where you mean to go, whatever's standing in the way. | S: 2, R: 1 | The Slytherin definition of determination; Ravenclaw focus |
 
 ---
 
 ## Scoring System
 
 ### Point Accumulation
-Each question has 4 answers. Each answer awards either:
-- **3 points** to one house (pure answer), or
-- **2 points** to one house + **1 point** to a second (mixed answer)
+Each question has 4 answers. Every answer awards exactly **2 points** to a primary house and **1 point** to a secondary house — there are no pure 3-point answers. Within each question:
 
-Every question answered adds exactly **3 points** to the total pool.
+- Each of the four houses is the **primary** of exactly one answer.
+- Each of the four houses is the **secondary** of exactly one answer (the secondaries form a derangement of the primaries, so primary and secondary never coincide).
+
+Consequences, verified across all 20 questions:
+
+| Metric (per house) | Value |
+|--------------------|-------|
+| Times primary | 20 |
+| Times secondary | 20 |
+| Total points in pool | 60 |
+| **Theoretical maximum a player can earn** | **40** |
+
+Every house is therefore exactly equally represented.
 
 ### Percentage Calculation
-After all 20 questions are answered (60 total points distributed):
+Leanings are scaled against each house's **own theoretical maximum**, not against the other houses. A house's ceiling is the sum, over all questions, of the highest score that house can earn in that question (2 every time → **40**):
 
 ```
-raw_score[house] = sum of all points awarded to that house
-percentage[house] = round(raw_score[house] / total_points * 100)
+raw_score[house]  = sum of all points awarded to that house
+percentage[house] = round(raw_score[house] / theoretical_max[house] * 100)
 ```
 
-Rounding is applied, and any 1-point sum discrepancy is corrected against the highest-scoring house.
+So a player who earns 36 of a possible 40 toward Ravenclaw reads as **90% Ravenclaw**. Each leaning is an independent 0–100% measure of "how close did you come to the most X-aligned answer every time" — the four percentages are **not** a pie chart and do not sum to 100%.
 
 ### House Assignment
-The house with the highest percentage wins. Ties are broken by the order Gryffindor > Hufflepuff > Ravenclaw > Slytherin (canonical Pottermore tiebreaker direction).
+The house with the highest percentage wins. Because every ceiling is identical (40), the winner is also simply the highest raw score. Ties are broken by the order Gryffindor > Hufflepuff > Ravenclaw > Slytherin (canonical Pottermore tiebreaker direction).
+
+### Randomised Answer Order
+Answers are shuffled with a Fisher–Yates pass on every render. The app tracks each answer's *original* index for scoring, so the shuffle is purely presentational — the highest-scoring answer for any house lands in an unpredictable position each time, and patterns can't be learned across questions.
 
 ### Score Calibration
-The 20 questions are calibrated so that a person answering entirely randomly (equal probability across all answers) yields approximately equal scores across all four houses. Questions with mixed-point answers intentionally blur house boundaries, making the quiz nearly impossible to game without having read this document.
+Because primaries and secondaries are perfectly balanced, a player answering entirely at random trends toward equal scores across all four houses. The 2/1 split on every answer intentionally blurs house boundaries, and combined with the randomised order, makes the quiz very hard to game without having read this document.
 
 ---
 

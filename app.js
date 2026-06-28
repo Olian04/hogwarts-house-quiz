@@ -24,13 +24,12 @@ function route() {
 
   if (hash.startsWith('#r/')) {
     const parts = hash.slice(3).split('/').map(Number);
-    if (parts.length === 4 && parts.every(n => !isNaN(n))) {
+    // Each leaning is an independent 0–100 value (scaled to its own ceiling),
+    // so they need not sum to 100 — just validate the range.
+    if (parts.length === 4 && parts.every(n => Number.isFinite(n) && n >= 0 && n <= 100)) {
       const pct = { G: parts[0], H: parts[1], R: parts[2], S: parts[3] };
-      const sum = parts.reduce((a, b) => a + b, 0);
-      if (sum >= 96 && sum <= 104) {
-        showView('result', pct);
-        return;
-      }
+      showView('result', pct);
+      return;
     }
   }
 
@@ -95,13 +94,23 @@ function renderQuestion() {
   typeEl.textContent = q.type;
   textEl.textContent = q.text;
 
+  // Shuffle display order each render, but keep each answer's ORIGINAL index so
+  // scoring and session storage stay stable regardless of how it's shown.
+  const order = q.answers.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+
   gridEl.innerHTML = '';
-  q.answers.forEach((answer, idx) => {
+  order.forEach((origIdx, displayPos) => {
+    const answer = q.answers[origIdx];
+    const letter = String.fromCharCode(65 + displayPos);
     const btn = document.createElement('button');
     btn.className = 'answer-btn';
-    btn.innerHTML = `<span class="answer-letter">${String.fromCharCode(65 + idx)}</span><span class="answer-text">${answer.text}</span>`;
-    btn.setAttribute('aria-label', `Answer ${String.fromCharCode(65 + idx)}: ${answer.text}`);
-    btn.addEventListener('click', () => selectAnswer(idx, btn));
+    btn.innerHTML = `<span class="answer-letter">${letter}</span><span class="answer-text">${answer.text}</span>`;
+    btn.setAttribute('aria-label', `Answer ${letter}: ${answer.text}`);
+    btn.addEventListener('click', () => selectAnswer(origIdx, btn));
     gridEl.appendChild(btn);
   });
 }
@@ -150,6 +159,22 @@ function finishQuiz() {
 
 // ─── Score calculation ────────────────────────────────────────────────────────
 
+// Theoretical maximum each house can earn = sum, over every question, of the
+// highest score that house appears with on any answer. Each leaning is scored
+// against its own ceiling, so 18 of a possible 20 reads as 90% — not as a slice
+// of a pie. (With the balanced data this ceiling is 40 for every house.)
+const HOUSE_MAX = (() => {
+  const max = { G: 0, H: 0, R: 0, S: 0 };
+  for (const q of QUESTIONS) {
+    for (const h of ['G', 'H', 'R', 'S']) {
+      let best = 0;
+      for (const a of q.answers) best = Math.max(best, a.scores[h] || 0);
+      max[h] += best;
+    }
+  }
+  return max;
+})();
+
 function calculateScores(answers) {
   const raw = { G: 0, H: 0, R: 0, S: 0 };
 
@@ -161,19 +186,9 @@ function calculateScores(answers) {
     }
   }
 
-  const total = Object.values(raw).reduce((a, b) => a + b, 0);
-  if (total === 0) return { G: 25, H: 25, R: 25, S: 25 };
-
   const pct = {};
   for (const h of ['G', 'H', 'R', 'S']) {
-    pct[h] = Math.round((raw[h] / total) * 100);
-  }
-
-  // Fix rounding drift
-  const sum = Object.values(pct).reduce((a, b) => a + b, 0);
-  if (sum !== 100) {
-    const maxH = Object.entries(pct).sort((a, b) => b[1] - a[1])[0][0];
-    pct[maxH] += (100 - sum);
+    pct[h] = HOUSE_MAX[h] ? Math.round((raw[h] / HOUSE_MAX[h]) * 100) : 0;
   }
 
   return pct;
