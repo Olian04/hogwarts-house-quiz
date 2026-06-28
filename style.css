@@ -159,6 +159,13 @@ a, button, [role="button"] {
   margin-bottom: 0.25rem;
 }
 
+/* The error heading is longer than the intro's, so cap it smaller to keep it on
+   one line within the content width; balance any wrap on narrow screens. */
+#view-error h1 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  text-wrap: balance;
+}
+
 .intro-subtitle {
   font-family: var(--font-serif);
   font-size: clamp(0.75rem, 2vw, 0.9rem);
