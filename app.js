@@ -22,15 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function route() {
   const hash = window.location.hash;
 
-  if (hash.startsWith('#r/')) {
-    const parts = hash.slice(3).split('/').map(Number);
-    // Each leaning is an independent 0–100 value (scaled to its own ceiling),
-    // so they need not sum to 100 — just validate the range.
-    if (parts.length === 4 && parts.every(n => Number.isFinite(n) && n >= 0 && n <= 100)) {
-      const pct = { G: parts[0], H: parts[1], R: parts[2], S: parts[3] };
-      showView('result', pct);
-      return;
-    }
+  const decoded = decodeResults(hash);
+  if (decoded) {
+    showView('result', decoded);
+    return;
   }
 
   // Restore in-progress quiz from session storage
@@ -194,8 +189,62 @@ function calculateScores(answers) {
   return pct;
 }
 
+// ─── Result hash encoding ──────────────────────────────────────────────────────
+// The four leanings + a checksum are packed into one opaque base64url token, so
+// the URL doesn't expose tweakable numbers. Editing the token almost always
+// breaks the checksum and the link is rejected. This is light obfuscation to
+// discourage casual tampering — not security, since the logic is client-side.
+
+const HASH_PREFIX = '#r/';
+
+function checksumByte(g, h, r, s) {
+  return (g * 31 + h * 37 + r * 41 + s * 43 + 137) & 0xFF;
+}
+
+function b64urlEncode(bytes) {
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function b64urlDecode(token) {
+  let b64 = token.replace(/-/g, '+').replace(/_/g, '/');
+  while (b64.length % 4) b64 += '=';
+  const bin = atob(b64);
+  const bytes = [];
+  for (let i = 0; i < bin.length; i++) bytes.push(bin.charCodeAt(i));
+  return bytes;
+}
+
 function encodeResults(pct) {
-  return `#r/${pct.G}/${pct.H}/${pct.R}/${pct.S}`;
+  const { G, H, R, S } = pct;
+  return HASH_PREFIX + b64urlEncode([G, H, R, S, checksumByte(G, H, R, S)]);
+}
+
+function decodeResults(hash) {
+  if (!hash.startsWith(HASH_PREFIX)) return null;
+  const token = hash.slice(HASH_PREFIX.length);
+
+  // Backward compatibility: old plain "#r/G/H/R/S" links.
+  if (token.includes('/')) {
+    const parts = token.split('/').map(Number);
+    if (parts.length === 4 && parts.every(n => Number.isFinite(n) && n >= 0 && n <= 100)) {
+      return { G: parts[0], H: parts[1], R: parts[2], S: parts[3] };
+    }
+    return null;
+  }
+
+  let bytes;
+  try {
+    bytes = b64urlDecode(token);
+  } catch (e) {
+    return null;
+  }
+  if (bytes.length !== 5) return null;
+  const [G, H, R, S, sum] = bytes;
+  if ([G, H, R, S].some(n => n < 0 || n > 100)) return null;
+  if (checksumByte(G, H, R, S) !== sum) return null;
+  return { G, H, R, S };
 }
 
 function getWinningHouse(pct) {
