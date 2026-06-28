@@ -110,7 +110,8 @@ a, button, [role="button"] {
 /* ═══════════════════════════════════════════════════════════════════════════════
    INTRO VIEW
 ═══════════════════════════════════════════════════════════════════════════════ */
-#view-intro {
+#view-intro,
+#view-error {
   /* align-items centers horizontally; we do NOT use justify-content: center here.
      Instead we use margin-block: auto on the child so that on short viewports the
      content centers, but on tall content it starts from the top and is scrollable. */

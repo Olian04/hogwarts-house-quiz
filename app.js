@@ -17,21 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
   route();
   window.addEventListener('hashchange', route);
   document.getElementById('btn-start').addEventListener('click', startQuiz);
+  document.getElementById('btn-error-start').addEventListener('click', startQuiz);
 });
 
 function route() {
   const hash = window.location.hash;
 
-  if (hash.startsWith('#r/')) {
-    const parts = hash.slice(3).split('/').map(Number);
-    if (parts.length === 4 && parts.every(n => !isNaN(n))) {
-      const pct = { G: parts[0], H: parts[1], R: parts[2], S: parts[3] };
-      const sum = parts.reduce((a, b) => a + b, 0);
-      if (sum >= 96 && sum <= 104) {
-        showView('result', pct);
-        return;
-      }
-    }
+  // A result hash that fails to decode (mistyped, truncated, or tampered) gets
+  // an explanatory error page rather than silently dropping to the intro.
+  if (hash.startsWith(HASH_PREFIX)) {
+    const decoded = decodeResults(hash);
+    showView(decoded ? 'result' : 'error', decoded);
+    return;
   }
 
   // Restore in-progress quiz from session storage
@@ -95,13 +92,23 @@ function renderQuestion() {
   typeEl.textContent = q.type;
   textEl.textContent = q.text;
 
+  // Shuffle display order each render, but keep each answer's ORIGINAL index so
+  // scoring and session storage stay stable regardless of how it's shown.
+  const order = q.answers.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+
   gridEl.innerHTML = '';
-  q.answers.forEach((answer, idx) => {
+  order.forEach((origIdx, displayPos) => {
+    const answer = q.answers[origIdx];
+    const letter = String.fromCharCode(65 + displayPos);
     const btn = document.createElement('button');
     btn.className = 'answer-btn';
-    btn.innerHTML = `<span class="answer-letter">${String.fromCharCode(65 + idx)}</span><span class="answer-text">${answer.text}</span>`;
-    btn.setAttribute('aria-label', `Answer ${String.fromCharCode(65 + idx)}: ${answer.text}`);
-    btn.addEventListener('click', () => selectAnswer(idx, btn));
+    btn.innerHTML = `<span class="answer-letter">${letter}</span><span class="answer-text">${answer.text}</span>`;
+    btn.setAttribute('aria-label', `Answer ${letter}: ${answer.text}`);
+    btn.addEventListener('click', () => selectAnswer(origIdx, btn));
     gridEl.appendChild(btn);
   });
 }
@@ -150,6 +157,22 @@ function finishQuiz() {
 
 // ─── Score calculation ────────────────────────────────────────────────────────
 
+// Theoretical maximum each house can earn = sum, over every question, of the
+// highest score that house appears with on any answer. Each leaning is scored
+// against its own ceiling, so 18 of a possible 20 reads as 90% — not as a slice
+// of a pie. (With the balanced data this ceiling is 40 for every house.)
+const HOUSE_MAX = (() => {
+  const max = { G: 0, H: 0, R: 0, S: 0 };
+  for (const q of QUESTIONS) {
+    for (const h of ['G', 'H', 'R', 'S']) {
+      let best = 0;
+      for (const a of q.answers) best = Math.max(best, a.scores[h] || 0);
+      max[h] += best;
+    }
+  }
+  return max;
+})();
+
 function calculateScores(answers) {
   const raw = { G: 0, H: 0, R: 0, S: 0 };
 
@@ -161,26 +184,62 @@ function calculateScores(answers) {
     }
   }
 
-  const total = Object.values(raw).reduce((a, b) => a + b, 0);
-  if (total === 0) return { G: 25, H: 25, R: 25, S: 25 };
-
   const pct = {};
   for (const h of ['G', 'H', 'R', 'S']) {
-    pct[h] = Math.round((raw[h] / total) * 100);
-  }
-
-  // Fix rounding drift
-  const sum = Object.values(pct).reduce((a, b) => a + b, 0);
-  if (sum !== 100) {
-    const maxH = Object.entries(pct).sort((a, b) => b[1] - a[1])[0][0];
-    pct[maxH] += (100 - sum);
+    pct[h] = HOUSE_MAX[h] ? Math.round((raw[h] / HOUSE_MAX[h]) * 100) : 0;
   }
 
   return pct;
 }
 
+// ─── Result hash encoding ──────────────────────────────────────────────────────
+// The four leanings + a checksum are packed into one opaque base64url token, so
+// the URL doesn't expose tweakable numbers. Editing the token almost always
+// breaks the checksum and the link is rejected. This is light obfuscation to
+// discourage casual tampering — not security, since the logic is client-side.
+// Tokens are validated by checksum and length; anything else is rejected.
+
+const HASH_PREFIX = '#r/';
+
+function checksumByte(g, h, r, s) {
+  return (g * 31 + h * 37 + r * 41 + s * 43 + 137) & 0xFF;
+}
+
+function b64urlEncode(bytes) {
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function b64urlDecode(token) {
+  let b64 = token.replace(/-/g, '+').replace(/_/g, '/');
+  while (b64.length % 4) b64 += '=';
+  const bin = atob(b64);
+  const bytes = [];
+  for (let i = 0; i < bin.length; i++) bytes.push(bin.charCodeAt(i));
+  return bytes;
+}
+
 function encodeResults(pct) {
-  return `#r/${pct.G}/${pct.H}/${pct.R}/${pct.S}`;
+  const { G, H, R, S } = pct;
+  return HASH_PREFIX + b64urlEncode([G, H, R, S, checksumByte(G, H, R, S)]);
+}
+
+function decodeResults(hash) {
+  if (!hash.startsWith(HASH_PREFIX)) return null;
+  const token = hash.slice(HASH_PREFIX.length);
+
+  let bytes;
+  try {
+    bytes = b64urlDecode(token);
+  } catch (e) {
+    return null;
+  }
+  if (bytes.length !== 5) return null;
+  const [G, H, R, S, sum] = bytes;
+  if ([G, H, R, S].some(n => n < 0 || n > 100)) return null;
+  if (checksumByte(G, H, R, S) !== sum) return null;
+  return { G, H, R, S };
 }
 
 function getWinningHouse(pct) {
