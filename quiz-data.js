@@ -82,12 +82,12 @@ const QUESTIONS = [
   {
     id: 1,
     type: 'Scenario',
-    text: "You discover that a rule you've followed your whole life was founded on a lie. Your first instinct is…",
+    text: "You discover that a rule you've followed your whole life was founded on a lie. Your first instinct is to…",
     answers: [
-      { text: "Something is wrong here, and you can already feel yourself about to be the one who says it out loud.", scores: { G: 2, H: 1 } },
-      { text: "You think first of everyone else who built their life around it, and what this will do to them.", scores: { H: 2, R: 1 } },
-      { text: "You want the whole story — who started it, what they gained, and how it held together for so long.", scores: { R: 2, S: 1 } },
-      { text: "A false beginning doesn't make it useless. You weigh what it's actually been doing before touching it.", scores: { S: 2, G: 1 } }
+      { text: "Call it out. You can already tell you'll be the one who refuses to let the lie stand.", scores: { G: 2, H: 1 } },
+      { text: "Think of everyone who built their life around this rule, and what the truth will do to them.", scores: { H: 2, R: 1 } },
+      { text: "Dig in and find out who started the lie, what they gained, and how it lasted so long.", scores: { R: 2, S: 1 } },
+      { text: "Weigh what the rule has actually been doing before touching it — a false start doesn't make it useless.", scores: { S: 2, G: 1 } }
     ]
   },
   {
@@ -95,10 +95,10 @@ const QUESTIONS = [
     type: 'Dilemma',
     text: "You can save your closest friend or five strangers — but not both. You…",
     answers: [
-      { text: "Refuse the choice and throw everything you have at saving all six, right up to the final second.", scores: { G: 2, R: 1 } },
-      { text: "Choose the five, and quietly carry what it cost you for the rest of your life.", scores: { H: 2, S: 1 } },
-      { text: "Do the arithmetic you don't want to do: five lives weigh more than one, however much it hurts.", scores: { R: 2, G: 1 } },
-      { text: "Save the one person you'd never be able to face yourself again for abandoning.", scores: { S: 2, H: 1 } }
+      { text: "Refuse the choice and throw everything you've got at saving all six, right to the last second.", scores: { G: 2, R: 1 } },
+      { text: "Save the five, and quietly carry what it costs you for the rest of your life.", scores: { H: 2, S: 1 } },
+      { text: "Do the math you don't want to do: five lives outweigh one, however much it hurts.", scores: { R: 2, G: 1 } },
+      { text: "Save your friend — the one person you could never live with yourself for abandoning.", scores: { S: 2, H: 1 } }
     ]
   },
   {
@@ -106,10 +106,10 @@ const QUESTIONS = [
     type: 'Scenario',
     text: "Three months into a project, you discover a flaw so fundamental it requires starting over. You…",
     answers: [
-      { text: "When it gets brutal is exactly when you refuse to walk away. You'll outlast the problem.", scores: { G: 2, S: 1 } },
-      { text: "You begin again without drama. Someone's relying on this, and that's reason enough to do it right.", scores: { H: 2, G: 1 } },
-      { text: "You won't put your name on something you know is built wrong. Rebuild it, deadline or not.", scores: { R: 2, H: 1 } },
-      { text: "Step back and look for the angle nobody's tried. There's usually a path that isn't brute force.", scores: { S: 2, R: 1 } }
+      { text: "Dig in and grind through it — you don't walk away just because it turned brutal.", scores: { G: 2, S: 1 } },
+      { text: "Start over without complaint. People are counting on this, and that's reason enough to do it right.", scores: { H: 2, G: 1 } },
+      { text: "Refuse to hand over something you know is built wrong, and rebuild it properly — deadline or not.", scores: { R: 2, H: 1 } },
+      { text: "Step back and look for the angle no one's tried. There's usually a path that isn't brute force.", scores: { S: 2, R: 1 } }
     ]
   },
   {
@@ -117,31 +117,31 @@ const QUESTIONS = [
     type: 'Values',
     text: "Which of these would bother you most in a leader?",
     answers: [
-      { text: "They bend on the things they swore they'd never bend on, the moment it's inconvenient.", scores: { G: 2, H: 1 } },
-      { text: "They let the people who did the work fade into the background while they take the bow.", scores: { H: 2, G: 1 } },
-      { text: "They make the big call without ever really grasping what they're deciding about.", scores: { R: 2, S: 1 } },
-      { text: "When it actually counts, they leave their own people exposed.", scores: { S: 2, R: 1 } }
+      { text: "Bending on the things they swore they'd never bend on, the moment it's convenient.", scores: { G: 2, H: 1 } },
+      { text: "Letting the people who did the work fade into the background while they take the credit.", scores: { H: 2, G: 1 } },
+      { text: "Making the big call without ever really grasping what they're deciding on.", scores: { R: 2, S: 1 } },
+      { text: "Leaving their own people exposed when it actually counts.", scores: { S: 2, R: 1 } }
     ]
   },
   {
     id: 5,
     type: 'Introspective',
-    text: "When you've done something you're not proud of, your first instinct is…",
+    text: "When you've done something you're not proud of, your first instinct is to…",
     answers: [
-      { text: "Say it out loud to whoever you wronged, before you lose the nerve.", scores: { G: 2, H: 1 } },
-      { text: "Skip the speech and just start putting it right where it actually landed.", scores: { H: 2, R: 1 } },
-      { text: "Trace back why you did it — you can't fix what you don't understand.", scores: { R: 2, S: 1 } },
+      { text: "Own it out loud to whoever you wronged, before you lose the nerve.", scores: { G: 2, H: 1 } },
+      { text: "Skip the apology speech and just start putting it right where it actually landed.", scores: { H: 2, R: 1 } },
+      { text: "Work out why you did it — you can't fix what you don't understand.", scores: { R: 2, S: 1 } },
       { text: "Take stock of the whole situation and find the move that actually repairs it.", scores: { S: 2, G: 1 } }
     ]
   },
   {
     id: 6,
     type: 'Hypothetical',
-    text: "If you could be remembered for one thing, what would you choose?",
+    text: "If you could be remembered for one thing, what would it be?",
     answers: [
       { text: "The one time you stepped forward when everyone else stepped back.", scores: { G: 2, R: 1 } },
       { text: "The quiet difference you made to people who'll never make a speech about it.", scores: { H: 2, S: 1 } },
-      { text: "A single idea that left the world a little clearer than you found it.", scores: { R: 2, G: 1 } },
+      { text: "An idea that left the world a little clearer than you found it.", scores: { R: 2, G: 1 } },
       { text: "Something you built that's still standing long after you're gone.", scores: { S: 2, H: 1 } }
     ]
   },
@@ -150,10 +150,10 @@ const QUESTIONS = [
     type: 'Introspective',
     text: "Your biggest flaw is probably…",
     answers: [
-      { text: "You're already moving before the rest of the room has finished thinking.", scores: { G: 2, S: 1 } },
-      { text: "You'll bleed yourself dry for other people and call it normal.", scores: { H: 2, G: 1 } },
-      { text: "You'd rather be correct than gentle, and it's cost you people.", scores: { R: 2, H: 1 } },
-      { text: "You want the win enough that the 'how' gets a little flexible.", scores: { S: 2, R: 1 } }
+      { text: "Acting before the rest of the room has finished thinking.", scores: { G: 2, S: 1 } },
+      { text: "Bleeding yourself dry for other people and calling it normal.", scores: { H: 2, G: 1 } },
+      { text: "Caring more about being right than being kind — and it's cost you people.", scores: { R: 2, H: 1 } },
+      { text: "Wanting the win badly enough that the 'how' gets a little flexible.", scores: { S: 2, R: 1 } }
     ]
   },
   {
@@ -161,9 +161,9 @@ const QUESTIONS = [
     type: 'Scenario',
     text: "A friend tells you a secret. Later, that secret becomes directly relevant to a serious problem affecting others. You…",
     answers: [
-      { text: "Tell them they have until tomorrow to come forward themselves — and mean it.", scores: { G: 2, H: 1 } },
-      { text: "Look for the path that protects everyone without making your friend the casualty.", scores: { H: 2, G: 1 } },
-      { text: "Decide the others' safety wins, say what has to be said, and face your friend with the full why.", scores: { R: 2, S: 1 } },
+      { text: "Give them until tomorrow to come forward themselves — and act if they don't.", scores: { G: 2, H: 1 } },
+      { text: "Look for a way to fix the problem that doesn't make your friend the casualty.", scores: { H: 2, G: 1 } },
+      { text: "Decide the others' safety wins, say what must be said, and tell your friend exactly why.", scores: { R: 2, S: 1 } },
       { text: "Keep it. You gave your word, and that isn't something you trade away.", scores: { S: 2, R: 1 } }
     ]
   },
@@ -172,10 +172,10 @@ const QUESTIONS = [
     type: 'Sensory',
     text: "Which environment feels most like home?",
     answers: [
-      { text: "A high, open edge with the whole landscape dropping away in front of you.", scores: { G: 2, H: 1 } },
-      { text: "A crowded, warm kitchen where everyone's talking over everyone.", scores: { H: 2, R: 1 } },
-      { text: "A still room and a long stretch of uninterrupted hours.", scores: { R: 2, S: 1 } },
-      { text: "A space that's exactly as you arranged it — nothing loud, nothing out of place.", scores: { S: 2, G: 1 } }
+      { text: "A high, open ledge with the whole landscape falling away in front of you.", scores: { G: 2, H: 1 } },
+      { text: "A warm, crowded kitchen where everyone's talking over everyone.", scores: { H: 2, R: 1 } },
+      { text: "A quiet room and a long, uninterrupted stretch of hours.", scores: { R: 2, S: 1 } },
+      { text: "A space arranged exactly how you like it — nothing loud, nothing out of place.", scores: { S: 2, G: 1 } }
     ]
   },
   {
@@ -183,10 +183,10 @@ const QUESTIONS = [
     type: 'Values',
     text: "Which is most worth fighting for?",
     answers: [
-      { text: "The right to choose your own path, even badly.", scores: { G: 2, R: 1 } },
-      { text: "A fair shake for the people who never seem to get one.", scores: { H: 2, S: 1 } },
-      { text: "Knowing what's actually true, whatever it turns out to be.", scores: { R: 2, G: 1 } },
-      { text: "A wall around the few people who are yours.", scores: { S: 2, H: 1 } }
+      { text: "The freedom to choose your own path, even when you choose badly.", scores: { G: 2, R: 1 } },
+      { text: "A fair shot for the people who never seem to get one.", scores: { H: 2, S: 1 } },
+      { text: "The truth of a thing, whatever it turns out to be.", scores: { R: 2, G: 1 } },
+      { text: "A wall around the few people who are truly yours.", scores: { S: 2, H: 1 } }
     ]
   },
   {
@@ -194,10 +194,10 @@ const QUESTIONS = [
     type: 'Scenario',
     text: "You realize you've been hired for a job based on an overestimation of your abilities. You…",
     answers: [
-      { text: "Tell them where you actually stand before it becomes a problem for anyone.", scores: { G: 2, S: 1 } },
+      { text: "Tell them honestly where you stand, before it becomes a problem for anyone.", scores: { G: 2, S: 1 } },
       { text: "Put your head down and out-work the gap until you've genuinely earned the seat.", scores: { H: 2, G: 1 } },
-      { text: "Disappear into the material until the gap simply isn't there anymore.", scores: { R: 2, H: 1 } },
-      { text: "Quietly make yourself impossible to replace using what you're actually good at.", scores: { S: 2, R: 1 } }
+      { text: "Throw yourself into the material until the gap simply isn't there anymore.", scores: { R: 2, H: 1 } },
+      { text: "Quietly make yourself indispensable using what you're genuinely good at.", scores: { S: 2, R: 1 } }
     ]
   },
   {
@@ -205,10 +205,10 @@ const QUESTIONS = [
     type: 'Dilemma',
     text: "A law prevents serious harm in 99% of cases — but you're in the 1% where following it would itself cause harm. You…",
     answers: [
-      { text: "Break it in the open and take whatever comes for it.", scores: { G: 2, H: 1 } },
-      { text: "Follow it anyway. Once you start carving out exceptions, the whole thing rots.", scores: { H: 2, G: 1 } },
-      { text: "Treat your case as proof the rule is broken, and go after the rule itself.", scores: { R: 2, S: 1 } },
-      { text: "Find the reading of the rule that lets you do what's needed without breaking it.", scores: { S: 2, R: 1 } }
+      { text: "Break it in the open and take whatever consequences come.", scores: { G: 2, H: 1 } },
+      { text: "Follow it anyway — once you start making exceptions, the whole thing rots.", scores: { H: 2, G: 1 } },
+      { text: "Treat your case as proof the law is broken, and go after the law itself.", scores: { R: 2, S: 1 } },
+      { text: "Find the reading of the law that lets you do what's needed without breaking it.", scores: { S: 2, R: 1 } }
     ]
   },
   {
@@ -216,10 +216,10 @@ const QUESTIONS = [
     type: 'Hypothetical',
     text: "You find out you have one year to live. You spend it…",
     answers: [
-      { text: "Doing all the things you were too afraid to do while there was still time to regret them.", scores: { G: 2, H: 1 } },
-      { text: "Making sure the people you love will be steady long after you're not there.", scores: { H: 2, R: 1 } },
-      { text: "Getting everything you've figured out down on paper before it's gone with you.", scores: { R: 2, S: 1 } },
-      { text: "Spending every bit of leverage you have on one thing that'll outlast you.", scores: { S: 2, G: 1 } }
+      { text: "Doing all the things you were always too afraid to do.", scores: { G: 2, H: 1 } },
+      { text: "Making sure the people you love will be steady long after you're gone.", scores: { H: 2, R: 1 } },
+      { text: "Getting everything you've figured out down on paper before it's lost.", scores: { R: 2, S: 1 } },
+      { text: "Spending every bit of influence you have on one thing that will outlast you.", scores: { S: 2, G: 1 } }
     ]
   },
   {
@@ -227,20 +227,20 @@ const QUESTIONS = [
     type: 'Social',
     text: "At a party where you know almost no one, you…",
     answers: [
-      { text: "Throw yourself in — you tend to leave with more people than you arrived with.", scores: { G: 2, R: 1 } },
-      { text: "Drift toward whatever needs doing — drinks refilled, the stranded person rescued.", scores: { H: 2, S: 1 } },
+      { text: "Throw yourself in — you usually leave with more people than you came with.", scores: { G: 2, R: 1 } },
+      { text: "Drift toward whatever needs doing: refilling drinks, rescuing the stranded guest.", scores: { H: 2, S: 1 } },
       { text: "Find the one person worth talking to and stay there most of the night.", scores: { R: 2, G: 1 } },
-      { text: "Hang back and read the room before you decide where to spend your energy.", scores: { S: 2, H: 1 } }
+      { text: "Hang back and read the room before deciding where to spend your energy.", scores: { S: 2, H: 1 } }
     ]
   },
   {
     id: 15,
     type: 'Values',
-    text: "The world gets better primarily through…",
+    text: "The world gets better mainly through…",
     answers: [
-      { text: "A few people willing to act on what they believe when it's costly to do so.", scores: { G: 2, S: 1 } },
+      { text: "A few people willing to act on what they believe, even when it costs them.", scores: { G: 2, S: 1 } },
       { text: "Ordinary people doing small, decent things, over and over.", scores: { H: 2, G: 1 } },
-      { text: "More people knowing more true things.", scores: { R: 2, H: 1 } },
+      { text: "More people coming to know what's actually true.", scores: { R: 2, H: 1 } },
       { text: "Capable people getting themselves to where the real decisions are made.", scores: { S: 2, R: 1 } }
     ]
   },
@@ -250,9 +250,9 @@ const QUESTIONS = [
     text: "When someone repeatedly underestimates you, you feel…",
     answers: [
       { text: "A pull to prove them wrong somewhere everyone can see it.", scores: { G: 2, H: 1 } },
-      { text: "Unbothered. What they think doesn't touch what you know about yourself.", scores: { H: 2, G: 1 } },
+      { text: "Unbothered — what they think doesn't touch what you know about yourself.", scores: { H: 2, G: 1 } },
       { text: "Curious about what's making them read you that way.", scores: { R: 2, S: 1 } },
-      { text: "Faintly pleased — being underestimated is a head start.", scores: { S: 2, R: 1 } }
+      { text: "Quietly pleased — being underestimated is a head start.", scores: { S: 2, R: 1 } }
     ]
   },
   {
@@ -260,10 +260,10 @@ const QUESTIONS = [
     type: 'Abstract',
     text: "You see yourself as…",
     answers: [
-      { text: "The push that gets something moving when it's stuck.", scores: { G: 2, H: 1 } },
-      { text: "The thing underneath that keeps it all from falling.", scores: { H: 2, R: 1 } },
-      { text: "The one who finally makes the blurry thing make sense.", scores: { R: 2, S: 1 } },
-      { text: "The steady pull that keeps things heading somewhere.", scores: { S: 2, G: 1 } }
+      { text: "The spark that gets something moving when it's stuck.", scores: { G: 2, H: 1 } },
+      { text: "The foundation that keeps everything from falling down.", scores: { H: 2, R: 1 } },
+      { text: "The lens that finally brings the blurry thing into focus.", scores: { R: 2, S: 1 } },
+      { text: "The current that keeps things moving in a direction.", scores: { S: 2, G: 1 } }
     ]
   },
   {
@@ -271,9 +271,9 @@ const QUESTIONS = [
     type: 'Social',
     text: "You'd rather be respected by…",
     answers: [
-      { text: "People you'll never meet, decades from now, because of something you did.", scores: { G: 2, R: 1 } },
-      { text: "The people who were there before any of this, and would be there after.", scores: { H: 2, S: 1 } },
-      { text: "The few people whose opinion you'd actually change your mind for.", scores: { R: 2, G: 1 } },
+      { text: "People you'll never meet, years from now, because of something you did.", scores: { G: 2, R: 1 } },
+      { text: "The few who were there before any of this, and would be there after.", scores: { H: 2, S: 1 } },
+      { text: "The handful of people whose judgment you'd actually defer to.", scores: { R: 2, G: 1 } },
       { text: "Strangers who take you seriously before you've said a word.", scores: { S: 2, H: 1 } }
     ]
   },
@@ -283,9 +283,9 @@ const QUESTIONS = [
     text: "A beloved mentor asks your honest opinion on their work, which you privately think has serious problems. You…",
     answers: [
       { text: "Give it to them straight. Softening it would be its own kind of disrespect.", scores: { G: 2, S: 1 } },
-      { text: "Start with what genuinely works, then raise the hard parts with care.", scores: { H: 2, G: 1 } },
-      { text: "Ask the questions that'll walk them to the problem themselves.", scores: { R: 2, H: 1 } },
-      { text: "Read what they're really after here before you decide how much to say.", scores: { S: 2, R: 1 } }
+      { text: "Lead with what genuinely works, then raise the hard parts with care.", scores: { H: 2, G: 1 } },
+      { text: "Ask the questions that walk them to the problem themselves.", scores: { R: 2, H: 1 } },
+      { text: "Read what they're really after before deciding how much to say.", scores: { S: 2, R: 1 } }
     ]
   },
   {
@@ -294,9 +294,9 @@ const QUESTIONS = [
     text: "At your core, what matters most to you?",
     answers: [
       { text: "Not letting fear be the thing that decides what you do.", scores: { G: 2, H: 1 } },
-      { text: "Being someone who keeps showing up when no one's keeping score.", scores: { H: 2, G: 1 } },
-      { text: "Seeing things as they really are, even when it isn't comforting.", scores: { R: 2, S: 1 } },
-      { text: "Getting where you mean to go, whatever's standing in the way.", scores: { S: 2, R: 1 } }
+      { text: "Being the one who keeps showing up when no one's keeping score.", scores: { H: 2, G: 1 } },
+      { text: "Seeing things as they truly are, even when it isn't comforting.", scores: { R: 2, S: 1 } },
+      { text: "Getting where you mean to go, whatever stands in the way.", scores: { S: 2, R: 1 } }
     ]
   }
 ];
