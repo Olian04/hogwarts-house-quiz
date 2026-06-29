@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-start').addEventListener('click', startQuiz);
   document.getElementById('btn-error-start').addEventListener('click', startQuiz);
   document.getElementById('btn-home').addEventListener('click', goHome);
+  document.addEventListener('keydown', handleQuizKeys);
   initResumeModal();
   initCrossTabSync();
 });
@@ -87,11 +88,13 @@ function showView(name, data) {
   const el = document.getElementById('view-' + name);
   if (!el) return;
 
-  if (name === 'quiz') renderQuestion();
-  if (name === 'result') renderResult(data);
-
+  // Activate first so the view is visible, then render — programmatic focus
+  // (used for accessibility) only works on a displayed element.
   el.classList.add('active');
   state.view = name;
+
+  if (name === 'quiz') renderQuestion();
+  if (name === 'result') renderResult(data);
 }
 
 // Return to the start page. Any in-progress quiz is left untouched in local
@@ -217,6 +220,9 @@ function renderQuestion() {
   const pct = ((num - 1) / total) * 100;
   document.getElementById('progress-bar').style.width = pct + '%';
   document.getElementById('question-counter').textContent = `Question ${num} of ${total}`;
+  const track = document.getElementById('progress-track');
+  track.setAttribute('aria-valuenow', num);
+  track.setAttribute('aria-valuetext', `Question ${num} of ${total}`);
 
   // Question card content
   const typeEl = document.getElementById('question-type');
@@ -265,6 +271,27 @@ function renderQuestion() {
 
     gridEl.appendChild(item);
   });
+
+  // Move focus to the new question so keyboard/screen-reader users land on the
+  // content (and the heading text is announced).
+  textEl.focus({ preventScroll: true });
+}
+
+// Number (1–4) and letter (A–D) keys pick the answer in that displayed position,
+// matching the letters shown on each option.
+function handleQuizKeys(e) {
+  if (state.view !== 'quiz' || state.transitioning) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  let idx = -1;
+  if (k >= '1' && k <= '4') idx = k.charCodeAt(0) - 49;       // '1'→0 … '4'→3
+  else if (k >= 'a' && k <= 'd') idx = k.charCodeAt(0) - 97;  // 'a'→0 … 'd'→3
+  if (idx < 0) return;
+  const btns = document.querySelectorAll('#answers-grid .answer-btn');
+  if (idx < btns.length && !btns[idx].disabled) {
+    e.preventDefault();
+    btns[idx].click();
+  }
 }
 
 function selectAnswer(answerIdx, btnEl) {
@@ -504,7 +531,7 @@ function renderResult(pct) {
       <div class="house-reveal" id="house-reveal">
         <div class="house-crest">
           <img class="house-crest-svg" src="${house.svg}" alt="${house.name} house crest" />
-          <div class="house-name">${house.name}</div>
+          <div class="house-name" id="result-house-name" tabindex="-1" role="heading" aria-level="1">${house.name}</div>
           <div class="house-tagline">${house.tagline}</div>
         </div>
       </div>
@@ -590,6 +617,10 @@ function renderResult(pct) {
       </div>
     </div>
   `;
+
+  // Land focus on the house name so keyboard/screen-reader users hear the result.
+  const nameEl = document.getElementById('result-house-name');
+  if (nameEl) nameEl.focus({ preventScroll: true });
 
   // Animate the bars once the leanings section has cascaded into view. Users who
   // prefer reduced motion get the filled bars right away.

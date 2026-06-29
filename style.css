@@ -71,6 +71,19 @@ a, button, [role="button"] {
   touch-action: manipulation;
 }
 
+/* Keyboard focus: a single, consistent gold ring on every focusable control.
+   Only shows for keyboard/AT focus (:focus-visible), never on mouse click. */
+:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+:focus:not(:focus-visible) { outline: none; }
+/* The question heading is focused on each new question but isn't a control —
+   keep it ring-free so only its text is announced. */
+#question-text:focus-visible,
+.house-name:focus-visible { outline: none; }
+
 /* ─── Ambient aurora ────────────────────────────────────────────────────────────
    A soft, slowly drifting wash of the four house colours sits behind everything,
    giving the dark backdrop depth and gentle movement. */
