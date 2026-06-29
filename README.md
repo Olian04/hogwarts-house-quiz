@@ -34,9 +34,18 @@ backend.
   to the start prompts you to resume or start over, and progress is shared across
   tabs — advancing in one tab invalidates the others, which reload on refocus.
 - **Atmospheric, responsive UI** — animated starfield, drifting house-colour
-  aurora, staggered reveals, and a fully mobile-friendly layout with safe-area
-  support. All motion respects `prefers-reduced-motion`.
-- **Installable.** Ships a web app manifest and full favicon/icon set.
+  aurora, staggered reveals, a "Sorting Hat is deciding…" suspense beat, and a
+  fully mobile-friendly layout with safe-area support. All motion respects
+  `prefers-reduced-motion`.
+- **Accessible.** Full keyboard support (`1–4` / `A–D` pick answers, `←/→`
+  navigate), visible focus rings, focus moved to new content, and live progress
+  for screen readers. You can also go **back to change an earlier answer**.
+- **Rich sharing.** A branded link-preview image, a share message, a combined
+  copy-link field, the native OS share sheet where available, and many networks
+  (X, Facebook, Reddit, WhatsApp, Telegram, Threads, Bluesky, LinkedIn,
+  Mastodon, Weibo/QZone) curated by device and system language.
+- **Installable & offline.** Ships a web app manifest, full favicon/icon set,
+  and a service worker that caches the app shell so it works with no network.
 
 ## Running it
 
