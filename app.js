@@ -549,21 +549,22 @@ function buildShareWhatsApp(houseName, url) {
 
 function generateParticles() {
   const container = document.getElementById('particles');
-  const count = 55;
+  const count = 70;
   for (let i = 0; i < count; i++) {
     const p = document.createElement('div');
-    // ~22% are larger "bright" stars with a glint; the rest are small soft dots.
-    const bright = Math.random() < 0.22;
+    // ~20% are larger "bright" stars with a glint; the rest are small soft dots.
+    const bright = Math.random() < 0.2;
     p.className = bright ? 'particle particle--bright' : 'particle';
-    const size = bright ? Math.random() * 1.6 + 2.0 : Math.random() * 1.3 + 0.6;
+    const size = bright ? Math.random() * 1.6 + 2.0 : Math.random() * 1.2 + 1.0;
+    // Opacity is driven by the twinkle keyframes (with a visible floor), so it's
+    // not set here — every star stays present rather than winking fully out.
     p.style.cssText = `
       left: ${Math.random() * 100}%;
       top: ${Math.random() * 100}%;
       width: ${size}px;
       height: ${size}px;
-      opacity: ${Math.random() * 0.5 + 0.1};
-      animation-duration: ${Math.random() * 8 + 6}s;
-      animation-delay: ${Math.random() * 10}s;
+      animation-duration: ${Math.random() * 6 + 5}s;
+      animation-delay: ${Math.random() * 8}s;
     `;
     container.appendChild(p);
   }
