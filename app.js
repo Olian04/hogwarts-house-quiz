@@ -37,6 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initCrossTabSync();
 });
 
+// Register the service worker so the quiz installs and works offline.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+
 function route() {
   const hash = window.location.hash;
 
