@@ -460,11 +460,11 @@ function renderResult(pct) {
     this.select();
   });
 
-  // Retake
-  document.getElementById('btn-retake').addEventListener('click', () => {
-    history.pushState(null, '', window.location.pathname);
-    startQuiz();
-  });
+  // Retake. startQuiz() honours an in-progress quiz (prompting resume/start over)
+  // — important when viewing someone else's shared result mid-quiz. beginFreshQuiz
+  // / resumeSavedQuiz set the #quiz hash themselves, so dismissing the modal
+  // leaves this result view (and its URL) untouched.
+  document.getElementById('btn-retake').addEventListener('click', startQuiz);
 
   // Back to the start page
   document.getElementById('btn-result-home').addEventListener('click', goHome);
