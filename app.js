@@ -276,13 +276,49 @@ function finishQuiz() {
   localStorage.removeItem(LS_ANSWERS);
   localStorage.removeItem(LS_INDEX);
   broadcastProgress();
-
-  // Navigate to result with hash encoding
-  const hash = encodeResults(pct);
-  history.replaceState(null, '', hash);
-
-  showView('result', pct);
   state.transitioning = false;
+
+  // When houses tie for the top, we don't settle it for you — the Hat tells you
+  // they all want you, and you choose where you belong (just as Harry did).
+  const max = Math.max(...HOUSE_ORDER.map(h => pct[h]));
+  const tied = HOUSE_ORDER.filter(h => pct[h] === max);
+  if (tied.length > 1) {
+    showSortingChoice(pct, tied);
+    return;
+  }
+
+  finalizeResult(pct, null);
+}
+
+// Commit to a result: stamp the URL (recording the player's choice if they made
+// one) and show the result view.
+function finalizeResult(pct, chosen) {
+  const result = { G: pct.G, H: pct.H, R: pct.R, S: pct.S };
+  if (chosen) result.chosen = chosen;
+  history.replaceState(null, '', encodeResults(pct, chosen));
+  showView('result', result);
+}
+
+// The Sorting Hat's choice screen, shown whenever houses tie for the top. The
+// player picks among the tied houses, and that choice is recorded in the result.
+function showSortingChoice(pct, tied) {
+  const container = document.getElementById('choice-options');
+  container.innerHTML = '';
+  tied.forEach(h => {
+    const house = HOUSES[h];
+    const btn = document.createElement('button');
+    btn.className = `choice-card choice-card--${h}`;
+    btn.setAttribute('aria-label', `Choose ${house.name}`);
+    btn.innerHTML =
+      `<img src="${house.svg}" alt="" />` +
+      `<span class="choice-house-name">${house.name}</span>` +
+      `<span class="choice-house-tag">${house.tagline}</span>`;
+    btn.addEventListener('click', () => finalizeResult(pct, h));
+    container.appendChild(btn);
+  });
+  showView('choice');
+  const first = container.querySelector('.choice-card');
+  if (first) first.focus();
 }
 
 // ─── Score calculation ────────────────────────────────────────────────────────
@@ -330,9 +366,12 @@ function calculateScores(answers) {
 // Tokens are validated by checksum and length; anything else is rejected.
 
 const HASH_PREFIX = '#r/';
+const HOUSE_ORDER = ['G', 'H', 'R', 'S'];
 
-function checksumByte(g, h, r, s) {
-  return (g * 31 + h * 37 + r * 41 + s * 43 + 137) & 0xFF;
+function checksumBytes(bytes) {
+  let c = 137;
+  for (const b of bytes) c = (c * 31 + b) & 0xFF;
+  return c;
 }
 
 function b64urlEncode(bytes) {
@@ -350,9 +389,14 @@ function b64urlDecode(token) {
   return bytes;
 }
 
-function encodeResults(pct) {
-  const { G, H, R, S } = pct;
-  return HASH_PREFIX + b64urlEncode([G, H, R, S, checksumByte(G, H, R, S)]);
+// The four leanings, an optional chosen-winner byte (only present when the player
+// resolved a Gryffindor/Slytherin tie themselves), and a checksum are packed into
+// one opaque base64url token.
+function encodeResults(pct, chosen) {
+  const data = [pct.G, pct.H, pct.R, pct.S];
+  if (chosen) data.push(HOUSE_ORDER.indexOf(chosen));
+  data.push(checksumBytes(data));
+  return HASH_PREFIX + b64urlEncode(data);
 }
 
 function decodeResults(hash) {
@@ -365,22 +409,42 @@ function decodeResults(hash) {
   } catch (e) {
     return null;
   }
-  if (bytes.length !== 5) return null;
-  const [G, H, R, S, sum] = bytes;
+  if (bytes.length !== 5 && bytes.length !== 6) return null;
+  const sum = bytes[bytes.length - 1];
+  const data = bytes.slice(0, -1);
+  if (checksumBytes(data) !== sum) return null;
+
+  const [G, H, R, S] = data;
   if ([G, H, R, S].some(n => n < 0 || n > 100)) return null;
-  if (checksumByte(G, H, R, S) !== sum) return null;
-  return { G, H, R, S };
+
+  const result = { G, H, R, S };
+  if (data.length === 5) {
+    const idx = data[4];
+    if (idx < 0 || idx > 3) return null;
+    result.chosen = HOUSE_ORDER[idx];
+  }
+  return result;
 }
 
+// Highest leaning wins. Ties are resolved deterministically from the score
+// pattern itself (so a shared link always reproduces the same house) but without
+// favouring any fixed house — unlike a fixed alphabetical order, which quietly
+// handed every tie to Gryffindor.
 function getWinningHouse(pct) {
-  const order = ['G', 'H', 'R', 'S'];
-  return order.reduce((best, h) => pct[h] > pct[best] ? h : best, 'G');
+  const max = Math.max(...HOUSE_ORDER.map(h => pct[h]));
+  const tied = HOUSE_ORDER.filter(h => pct[h] === max);
+  if (tied.length === 1) return tied[0];
+  let s = ((pct.G + 7) * 374761393 + (pct.H + 7) * 668265263 +
+           (pct.R + 7) * 2246822519 + (pct.S + 7) * 3266489917) >>> 0;
+  s = (s ^ (s >>> 15)) >>> 0;
+  return tied[s % tied.length];
 }
 
 // ─── Result rendering ─────────────────────────────────────────────────────────
 
 function renderResult(pct) {
-  const winner = getWinningHouse(pct);
+  // A player-resolved Gryffindor/Slytherin tie carries its winner explicitly.
+  const winner = pct.chosen || getWinningHouse(pct);
   const house = HOUSES[winner];
   const container = document.getElementById('view-result');
 

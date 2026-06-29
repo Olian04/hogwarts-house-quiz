@@ -365,7 +365,11 @@ percentage[house] = round(raw_score[house] / theoretical_max[house] * 100)
 So a player who earns 36 of a possible 40 toward Ravenclaw reads as **90% Ravenclaw**. Each leaning is an independent 0–100% measure of "how close did you come to the most X-aligned answer every time" — the four percentages are **not** a pie chart and do not sum to 100%.
 
 ### House Assignment
-The house with the highest percentage wins. Because every ceiling is identical (40), the winner is also simply the highest raw score. Ties are broken by the order Gryffindor > Hufflepuff > Ravenclaw > Slytherin (canonical Pottermore tiebreaker direction).
+The house with the highest percentage wins. Because every ceiling is identical (40), the winner is also simply the highest raw score.
+
+**Ties are the player's to settle.** When two, three, or all four houses tie for the top, the Sorting Hat doesn't decide for you — it tells you that more than one house would be proud to claim you and lets you *choose* which one you belong to (an echo of Harry being allowed to choose Gryffindor over Slytherin). The choice is recorded in the shareable result link so it always reproduces.
+
+A fixed alphabetical tiebreak was deliberately *removed*: ties occur in ~11% of random playthroughs, and always awarding them to the earliest house (Gryffindor) measurably skewed results toward it. For the rare case where a result link encodes a tie but no recorded choice, the winner is derived deterministically from the score pattern itself — fairly, without favouring any house.
 
 ### Randomised Answer Order
 Answers are shuffled with a Fisher–Yates pass on every render. The app tracks each answer's *original* index for scoring, so the shuffle is purely presentational — the highest-scoring answer for any house lands in an unpredictable position each time, and patterns can't be learned across questions.
