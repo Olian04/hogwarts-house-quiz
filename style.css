@@ -89,13 +89,45 @@ body::before {
 .particle {
   position: absolute;
   border-radius: 50%;
-  background: #fff;
+  /* Soft-edged glow rather than a hard disc, so stars don't read as flat circles. */
+  background: radial-gradient(circle, #fff 0%, #fff 22%, rgba(255,255,255,0) 72%);
   animation: twinkle linear infinite;
+}
+
+/* The larger stars get a faint halo and a four-point diffraction glint so they
+   look like points of light instead of obvious circles. */
+.particle--bright {
+  background: radial-gradient(circle, #fff 0%, #fff 28%, rgba(255,255,255,0) 70%);
+  box-shadow: 0 0 6px 1px rgba(255,255,255,0.45), 0 0 13px 2px rgba(220,200,140,0.22);
+  animation-name: twinkleBright;
+}
+.particle--bright::before,
+.particle--bright::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.particle--bright::before {
+  width: 700%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+}
+.particle--bright::after {
+  width: 1px;
+  height: 700%;
+  background: linear-gradient(0deg, transparent, rgba(255,255,255,0.55), transparent);
 }
 
 @keyframes twinkle {
   0%, 100% { opacity: 0.05; transform: scale(1); }
   50%       { opacity: 0.6;  transform: scale(1.4); }
+}
+
+@keyframes twinkleBright {
+  0%, 100% { opacity: 0.15; transform: scale(0.9); }
+  50%       { opacity: 0.95; transform: scale(1.15); }
 }
 
 /* ─── App shell ─────────────────────────────────────────────────────────────── */
@@ -113,6 +145,21 @@ body::before {
   min-height: 100dvh;
 }
 .view.active { display: flex; flex-direction: column; }
+
+/* Text that sits directly over the starfield carries a soft dark halo, so the
+   stars fade out right behind it and everything stays legible. */
+.intro-subtitle,
+.stat-num, .stat-label,
+#question-counter, .btn-home,
+.question-text,
+.sorting-hat-line,
+.house-name, .house-tagline,
+.house-description, .house-quote,
+.notable-label, .notable-names,
+.sponsor-text {
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 12px rgba(6,4,15,0.95);
+}
+.btn-home svg { filter: drop-shadow(0 0 4px rgba(6,4,15,0.95)); }
 
 /* Decorative rule */
 .hr-ornament {
@@ -441,6 +488,10 @@ body::before {
   padding: 0.2rem 0.7rem;
   border: 1px solid var(--border-glow);
   border-radius: 20px;
+  /* Dark frosted fill so the starfield doesn't sparkle through the badge. */
+  background: rgba(10, 6, 20, 0.45);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   font-size: 0.68rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -686,6 +737,10 @@ body::before {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  /* Dark frosted fill so the starfield doesn't sparkle through the chip. */
+  background: rgba(10, 6, 20, 0.45);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   animation: chipPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
@@ -913,7 +968,10 @@ body::before {
   align-items: center;
   padding: 0.7rem 2rem;
   min-height: 44px;
-  background: transparent;
+  /* Dark frosted fill so the starfield doesn't sparkle through the pill. */
+  background: rgba(10, 6, 20, 0.55);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   border: 1px solid var(--border-glow);
   border-radius: 50px;
   color: var(--gold);
@@ -926,13 +984,13 @@ body::before {
 
 @media (hover: hover) {
   .btn-retake:hover {
-    background: rgba(200,148,30,0.08);
+    background: rgba(54, 40, 12, 0.7);
     box-shadow: 0 0 15px rgba(200,148,30,0.15);
     transform: translateY(-1px);
   }
 }
 .btn-retake:active {
-  background: rgba(200,148,30,0.12);
+  background: rgba(64, 47, 14, 0.75);
   transform: scale(0.97);
 }
 
@@ -959,7 +1017,10 @@ body::before {
   min-height: 42px;
   border: 1px solid var(--border-glow);
   border-radius: 50px;
-  background: rgba(219, 97, 162, 0.08);
+  /* Dark frosted fill so the starfield doesn't sparkle through. */
+  background: rgba(16, 8, 22, 0.55);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   color: var(--cream);
   font-family: var(--font-serif);
   font-size: 0.9rem;
@@ -971,7 +1032,7 @@ body::before {
 
 @media (hover: hover) {
   .sponsor-link:hover {
-    background: rgba(219, 97, 162, 0.16);
+    background: rgba(46, 18, 38, 0.7);
     box-shadow: 0 0 18px rgba(219, 97, 162, 0.25);
     transform: translateY(-1px);
   }

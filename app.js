@@ -552,8 +552,10 @@ function generateParticles() {
   const count = 55;
   for (let i = 0; i < count; i++) {
     const p = document.createElement('div');
-    p.className = 'particle';
-    const size = Math.random() * 2.5 + 0.8;
+    // ~22% are larger "bright" stars with a glint; the rest are small soft dots.
+    const bright = Math.random() < 0.22;
+    p.className = bright ? 'particle particle--bright' : 'particle';
+    const size = bright ? Math.random() * 1.6 + 2.0 : Math.random() * 1.3 + 0.6;
     p.style.cssText = `
       left: ${Math.random() * 100}%;
       top: ${Math.random() * 100}%;
