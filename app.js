@@ -658,31 +658,7 @@ function renderResult(pct) {
       <div class="share-section fade-in-delayed">
         <h3 class="share-title">Share Your Result</h3>
         <p class="share-subtitle">This link loads your exact result — no re-taking required.</p>
-        <div class="share-buttons">
-          <a class="share-btn share-btn--x" href="${buildShareX(house.name, shareUrl)}" target="_blank" rel="noopener" aria-label="Share on X">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.751-8.878L2.25 2.25h6.836l4.27 5.641 5.138-5.641ZM17.08 19.77h1.833L7.084 4.126H5.117L17.08 19.77Z"/></svg>
-            X / Twitter
-          </a>
-          <a class="share-btn share-btn--fb" href="${buildShareFacebook(shareUrl)}" target="_blank" rel="noopener" aria-label="Share on Facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            Facebook
-          </a>
-          <a class="share-btn share-btn--reddit" href="${buildShareReddit(house.name, shareUrl)}" target="_blank" rel="noopener" aria-label="Share on Reddit">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
-            Reddit
-          </a>
-          <a class="share-btn share-btn--wa" href="${buildShareWhatsApp(house.name, shareUrl)}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-            WhatsApp
-          </a>
-          <button class="share-btn share-btn--copy" id="btn-copy" aria-label="Copy share link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            <span id="copy-label">Copy Link</span>
-          </button>
-        </div>
-        <div class="share-url-row">
-          <input class="share-url-input" id="share-url-input" type="text" readonly value="${shareUrl}" aria-label="Share URL" />
-        </div>
+        <div id="share-root"></div>
       </div>
 
       <div class="retake-section fade-in-delayed">
@@ -716,23 +692,8 @@ function renderResult(pct) {
     });
   }, reduceMotion ? 0 : 1300);
 
-  // Copy button
-  document.getElementById('btn-copy').addEventListener('click', () => {
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      const label = document.getElementById('copy-label');
-      label.textContent = 'Copied!';
-      setTimeout(() => { label.textContent = 'Copy Link'; }, 2000);
-    }).catch(() => {
-      const input = document.getElementById('share-url-input');
-      input.select();
-      document.execCommand('copy');
-    });
-  });
-
-  // Share URL click to select
-  document.getElementById('share-url-input').addEventListener('click', function() {
-    this.select();
-  });
+  // Build the share controls (native share, platform buttons, combined copy).
+  renderShareControls(shareUrl, house.name);
 
   // Retake. startQuiz() honours an in-progress quiz (prompting resume/start over)
   // — important when viewing someone else's shared result mid-quiz. beginFreshQuiz
@@ -744,25 +705,159 @@ function renderResult(pct) {
   document.getElementById('btn-result-home').addEventListener('click', goHome);
 }
 
-// ─── Share URL builders ───────────────────────────────────────────────────────
+// ─── Sharing ────────────────────────────────────────────────────────────────────
 
-function buildShareX(houseName, url) {
-  const text = encodeURIComponent(`I was sorted into ${houseName}! Take the Hogwarts Sorting Quiz:`);
-  return `https://x.com/intent/tweet?text=${text}&url=${encodeURIComponent(url)}`;
+const SHARE_TITLE = 'The Hogwarts Sorting Quiz';
+const enc = encodeURIComponent;
+
+function shareMessage(houseName) {
+  return `I was sorted into ${houseName}! Which house does the Sorting Hat choose for you?`;
 }
 
-function buildShareFacebook(url) {
-  return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+// Small inline icons. A generic "share/link" mark stands in where a faithful
+// brand logo path isn't worth the bytes; the brand colour carries recognition.
+const SHARE_ICON = {
+  generic: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.751-8.878L2.25 2.25h6.836l4.27 5.641 5.138-5.641ZM17.08 19.77h1.833L7.084 4.126H5.117L17.08 19.77Z"/></svg>',
+  fb: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+  reddit: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>',
+  wa: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>',
+  tg: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.27 1.37.18 1.09 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>',
+  li: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 11.001-4.121A2.06 2.06 0 015.34 7.43zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>',
+  bs: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078 2.67.296 5.568-.628 6.383-3.364C23.622 9.418 24 4.458 24 3.768c0-.69-.139-1.86-.902-2.203-.659-.299-1.664-.621-4.3 1.24C16.046 4.747 13.087 8.686 12 10.8z"/></svg>',
+  md: '<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M21.58 13.91c-.32 1.64-2.86 3.44-5.77 3.79-1.51.18-3 .35-4.59.27-2.6-.12-4.65-.62-4.65-.62 0 .25.02.49.05.72.34 2.57 2.55 2.72 4.65 2.79 2.11.07 3.99-.52 3.99-.52l.09 1.91s-1.48.79-4.1.94c-1.45.08-3.25-.04-5.34-.59-4.53-1.2-5.31-6.03-5.43-10.92-.04-1.45-.01-2.81-.01-3.96 0-4.87 3.19-6.3 3.19-6.3C5.26.96 8.03.7 10.91.68h.07c2.88.02 5.65.28 7.27 1.15 0 0 3.19 1.43 3.19 6.3 0 0 .04 3.59-.45 5.78M18.2 8.4c0-1.2-.3-2.15-.92-2.84-.63-.7-1.46-1.05-2.49-1.05-1.2 0-2.1.46-2.69 1.38l-.58.97-.58-.97c-.59-.92-1.49-1.38-2.69-1.38-1.03 0-1.86.35-2.49 1.05-.62.69-.92 1.64-.92 2.84v4.86h1.92V8.55c0-1.2.51-1.81 1.52-1.81 1.12 0 1.68.72 1.68 2.16v3.13h1.91V8.9c0-1.44.56-2.16 1.68-2.16 1.01 0 1.52.61 1.52 1.81v4.71h1.92V8.4z"/></svg>',
+};
+
+// Each platform builds a web-share intent URL from (text, url). Facebook and
+// LinkedIn only accept a URL; the rest carry the message too.
+const SHARE_PLATFORMS = {
+  whatsapp: { label: 'WhatsApp', cls: 'wa', icon: SHARE_ICON.wa, url: (t, u) => `https://wa.me/?text=${enc(t + ' ' + u)}` },
+  x:        { label: 'X', cls: 'x', icon: SHARE_ICON.x, url: (t, u) => `https://x.com/intent/tweet?text=${enc(t)}&url=${enc(u)}` },
+  telegram: { label: 'Telegram', cls: 'tg', icon: SHARE_ICON.tg, url: (t, u) => `https://t.me/share/url?url=${enc(u)}&text=${enc(t)}` },
+  facebook: { label: 'Facebook', cls: 'fb', icon: SHARE_ICON.fb, url: (t, u) => `https://www.facebook.com/sharer/sharer.php?u=${enc(u)}` },
+  reddit:   { label: 'Reddit', cls: 'reddit', icon: SHARE_ICON.reddit, url: (t, u) => `https://reddit.com/submit?url=${enc(u)}&title=${enc(t)}` },
+  threads:  { label: 'Threads', cls: 'th', icon: SHARE_ICON.generic, url: (t, u) => `https://www.threads.net/intent/post?text=${enc(t + ' ' + u)}` },
+  bluesky:  { label: 'Bluesky', cls: 'bs', icon: SHARE_ICON.bs, url: (t, u) => `https://bsky.app/intent/compose?text=${enc(t + ' ' + u)}` },
+  linkedin: { label: 'LinkedIn', cls: 'li', icon: SHARE_ICON.li, url: (t, u) => `https://www.linkedin.com/sharing/share-offsite/?url=${enc(u)}` },
+  mastodon: { label: 'Mastodon', cls: 'md', icon: SHARE_ICON.md, prompt: true },
+  weibo:    { label: 'Weibo', cls: 'wb', icon: SHARE_ICON.generic, url: (t, u) => `https://service.weibo.com/share/share.php?url=${enc(u)}&title=${enc(t)}` },
+  qzone:    { label: 'QZone', cls: 'qz', icon: SHARE_ICON.generic, url: (t, u) => `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${enc(u)}&title=${enc(t)}` },
+};
+
+// Device + system-language heuristic (no location permission needed).
+function shareContext() {
+  const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  const langs = (navigator.languages && navigator.languages.length)
+    ? navigator.languages : [navigator.language || ''];
+  // Simplified-Chinese locales (mainland / Singapore) → surface Chinese networks.
+  const isChina = langs.some(l => /^zh(-(cn|hans|sg))\b/i.test(l) || /^zh$/i.test(l) || /^zh-hans/i.test(l));
+  return { isMobile, isChina };
 }
 
-function buildShareReddit(houseName, url) {
-  const title = encodeURIComponent(`I was sorted into ${houseName} — take the Hogwarts Sorting Quiz`);
-  return `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${title}`;
+// Which platforms sit up top vs. behind "More options".
+function shareLayout({ isMobile, isChina }) {
+  if (isChina) {
+    return { top: ['weibo', 'qzone', 'x'], more: ['whatsapp', 'telegram', 'facebook', 'reddit', 'threads', 'bluesky', 'linkedin', 'mastodon'] };
+  }
+  if (isMobile) {
+    return { top: ['whatsapp', 'x', 'telegram'], more: ['facebook', 'reddit', 'threads', 'bluesky', 'linkedin', 'mastodon'] };
+  }
+  return { top: ['x', 'facebook', 'reddit', 'linkedin'], more: ['whatsapp', 'telegram', 'threads', 'bluesky', 'mastodon'] };
 }
 
-function buildShareWhatsApp(houseName, url) {
-  const text = encodeURIComponent(`I was sorted into ${houseName}! Take the Hogwarts Sorting Quiz: ${url}`);
-  return `https://wa.me/?text=${text}`;
+function makeShareButton(key, text, url) {
+  const p = SHARE_PLATFORMS[key];
+  if (p.prompt) {
+    // Mastodon has no universal web intent; ask for the user's instance.
+    const b = document.createElement('button');
+    b.className = `share-btn share-btn--${p.cls}`;
+    b.innerHTML = `${p.icon}<span>${p.label}</span>`;
+    b.addEventListener('click', () => {
+      let inst = prompt('Your Mastodon instance:', 'mastodon.social');
+      if (!inst) return;
+      inst = inst.trim().replace(/^https?:\/\//, '').replace(/\/+$/, '');
+      if (inst) window.open(`https://${inst}/share?text=${enc(text + ' ' + url)}`, '_blank', 'noopener');
+    });
+    return b;
+  }
+  const a = document.createElement('a');
+  a.className = `share-btn share-btn--${p.cls}`;
+  a.href = p.url(text, url);
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.setAttribute('aria-label', `Share on ${p.label}`);
+  a.innerHTML = `${p.icon}<span>${p.label}</span>`;
+  return a;
+}
+
+function renderShareControls(shareUrl, houseName) {
+  const root = document.getElementById('share-root');
+  if (!root) return;
+  const text = shareMessage(houseName);
+  const { top, more } = shareLayout(shareContext());
+  root.innerHTML = '';
+
+  // Native OS share sheet (mobile + some desktops) — the only path to app-only
+  // apps like Instagram, TikTok, Snapchat, WeChat. Offered up top when present.
+  if (navigator.share) {
+    const nb = document.createElement('button');
+    nb.className = 'share-btn share-btn--native';
+    nb.innerHTML = `${SHARE_ICON.generic}<span>Share…</span>`;
+    nb.addEventListener('click', () => {
+      navigator.share({ title: SHARE_TITLE, text, url: shareUrl }).catch(() => {});
+    });
+    root.appendChild(nb);
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'share-buttons';
+  top.forEach(k => grid.appendChild(makeShareButton(k, text, shareUrl)));
+  root.appendChild(grid);
+
+  if (more.length) {
+    const moreGrid = document.createElement('div');
+    moreGrid.className = 'share-more';
+    moreGrid.hidden = true;
+    more.forEach(k => moreGrid.appendChild(makeShareButton(k, text, shareUrl)));
+
+    const toggle = document.createElement('button');
+    toggle.className = 'share-more-toggle';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = 'More options';
+    toggle.addEventListener('click', () => {
+      const opening = moreGrid.hidden;
+      moreGrid.hidden = !opening;
+      toggle.setAttribute('aria-expanded', String(opening));
+      toggle.textContent = opening ? 'Fewer options' : 'More options';
+    });
+    root.appendChild(toggle);
+    root.appendChild(moreGrid);
+  }
+
+  // Combined copy field: the link and Copy button joined as one pill.
+  const copyRow = document.createElement('div');
+  copyRow.className = 'copy-row';
+  copyRow.innerHTML =
+    `<input class="copy-input" id="share-url-input" type="text" readonly aria-label="Share link" />` +
+    `<button class="copy-btn" id="btn-copy" type="button" aria-label="Copy share link"><span id="copy-label">Copy</span></button>`;
+  root.appendChild(copyRow);
+
+  const input = copyRow.querySelector('#share-url-input');
+  input.value = shareUrl;
+  input.addEventListener('click', function () { this.select(); });
+  copyRow.querySelector('#btn-copy').addEventListener('click', () => {
+    const done = () => {
+      const l = document.getElementById('copy-label');
+      if (!l) return;
+      l.textContent = 'Copied!';
+      setTimeout(() => { l.textContent = 'Copy'; }, 2000);
+    };
+    navigator.clipboard.writeText(shareUrl).then(done).catch(() => {
+      input.select();
+      document.execCommand('copy');
+      done();
+    });
+  });
 }
 
 // ─── Particles ────────────────────────────────────────────────────────────────

@@ -1084,32 +1084,90 @@ body::before {
 .share-btn--fb      { background: #1877f2; color: #fff; }
 .share-btn--reddit  { background: #ff4500; color: #fff; }
 .share-btn--wa      { background: #25d366; color: #fff; }
-.share-btn--copy    { background: var(--bg-card2); color: var(--cream); border-color: var(--border-glow); }
+.share-btn--tg      { background: #229ed9; color: #fff; }
+.share-btn--li      { background: #0a66c2; color: #fff; }
+.share-btn--th      { background: #101010; color: #fff; border-color: #333; }
+.share-btn--bs      { background: #1185fe; color: #fff; }
+.share-btn--md      { background: #5c4ee5; color: #fff; }
+.share-btn--wb      { background: #e6162d; color: #fff; }
+.share-btn--qz      { background: #fdbe2c; color: #2a2030; }
 
-.share-url-row { margin-top: 0.5rem; }
-
-.share-url-input {
+/* Native OS share sheet — the realistic way to reach app-only platforms
+   (Instagram, TikTok, Snapchat, WeChat, Douyin…). Prominent and full-width. */
+.share-btn--native {
   width: 100%;
-  padding: 0.65rem 0.9rem;
-  /* 16px prevents iOS Safari from auto-zooming on focus */
-  font-size: 16px;
-  background: var(--bg);
+  margin-bottom: 0.8rem;
+  background: linear-gradient(135deg, #8a6000, var(--gold), #8a6000);
+  color: #1a0e00;
+  font-weight: bold;
+  border-color: var(--gold);
+}
+
+/* "More options" disclosure */
+.share-more-toggle {
+  display: block;
+  margin: 0.1rem auto 0.9rem;
+  padding: 0.3rem 0.7rem;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  opacity: 0.85;
+}
+.share-more {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.share-more[hidden] { display: none; }
+
+/* Combined copy field: the link and the Copy button joined into one pill. */
+.copy-row {
+  display: flex;
+  align-items: stretch;
+  margin-top: 0.5rem;
   border: 1px solid var(--border);
   border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.copy-row:focus-within { border-color: var(--border-glow); }
+.copy-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.9rem;
+  font-size: 16px; /* prevents iOS Safari auto-zoom on focus */
+  background: transparent;
+  border: none;
   color: var(--muted);
   font-family: monospace;
   cursor: text;
   outline: none;
-  transition: border-color var(--transition);
-  /* Prevent iOS zoom */
   touch-action: manipulation;
-  /* Visually trim the URL if it overflows */
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-
-.share-url-input:focus { border-color: var(--border-glow); }
+.copy-btn {
+  flex-shrink: 0;
+  padding: 0 1.15rem;
+  min-height: 44px;
+  background: var(--bg-card2);
+  border: none;
+  border-left: 1px solid var(--border);
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+@media (hover: hover) { .copy-btn:hover { background: rgba(44, 32, 12, 0.7); } }
+.copy-btn:active { background: rgba(64, 47, 14, 0.8); }
 
 /* ─── Retake ─────────────────────────────────────────────────────────────────── */
 .retake-section { text-align: center; }
