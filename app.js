@@ -335,7 +335,7 @@ function showSortingChoice(pct, tied) {
   tied.forEach(h => {
     const house = HOUSES[h];
     const btn = document.createElement('button');
-    btn.className = `choice-card choice-card--${h}`;
+    btn.className = `choice-card house-${h}`;
     btn.setAttribute('aria-label', `Choose ${house.name}`);
     btn.innerHTML =
       `<img src="${house.svg}" alt="" />` +
@@ -488,11 +488,9 @@ function renderResult(pct) {
   }
   const container = document.getElementById('view-result');
 
-  // Apply house theme to result view
-  container.style.setProperty('--house-primary', house.primary);
-  container.style.setProperty('--house-secondary', house.secondary);
-  container.style.setProperty('--house-bg', house.bg);
-  container.style.setProperty('--house-text', house.textOnDark);
+  // Theme the whole result view with the winning house's colours (CSS .house-*).
+  container.classList.remove('house-G', 'house-H', 'house-R', 'house-S');
+  container.classList.add('house-' + winner);
 
   const shareUrl = window.location.origin + window.location.pathname + encodeResults(pct);
 
@@ -506,8 +504,8 @@ function renderResult(pct) {
       <div class="house-reveal" id="house-reveal">
         <div class="house-crest">
           <img class="house-crest-svg" src="${house.svg}" alt="${house.name} house crest" />
-          <div class="house-name" style="color: ${house.secondary};">${house.name}</div>
-          <div class="house-tagline" style="color: ${house.textOnDark};">${house.tagline}</div>
+          <div class="house-name">${house.name}</div>
+          <div class="house-tagline">${house.tagline}</div>
         </div>
       </div>
 
@@ -519,20 +517,20 @@ function renderResult(pct) {
       </div>
 
       <div class="traits-row fade-in-delayed">
-        ${house.traits.map(t => `<span class="trait-chip" style="border-color:${house.secondary};color:${house.secondary}">${t}</span>`).join('')}
+        ${house.traits.map(t => `<span class="trait-chip">${t}</span>`).join('')}
       </div>
 
       <div class="leanings-section fade-in-delayed">
         <h3 class="leanings-title">Your House Leanings</h3>
         <div class="bars-container" id="bars-container">
           ${sorted.map(h => `
-            <div class="bar-row ${h === winner ? 'bar-row--winner' : ''}">
+            <div class="bar-row house-${h} ${h === winner ? 'bar-row--winner' : ''}">
               <div class="bar-label">
                 <img class="bar-crest" src="${HOUSES[h].svg}" alt="${HOUSES[h].name}" />
                 <span class="bar-name">${HOUSES[h].name}</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill" data-pct="${pct[h]}" style="background: linear-gradient(90deg, ${HOUSES[h].primary}, ${HOUSES[h].secondary}); width: 0%;"></div>
+                <div class="bar-fill" data-pct="${pct[h]}" style="width: 0%;"></div>
               </div>
               <span class="bar-pct">${pct[h]}%</span>
             </div>
