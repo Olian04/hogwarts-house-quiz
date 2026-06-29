@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-error-start').addEventListener('click', startQuiz);
   document.getElementById('btn-home').addEventListener('click', goHome);
   initResumeModal();
+  initCrossTabSync();
 });
 
 function route() {
@@ -104,6 +105,7 @@ function beginFreshQuiz() {
   state.answers = {};
   localStorage.removeItem(LS_ANSWERS);
   localStorage.removeItem(LS_INDEX);
+  broadcastProgress();
   history.pushState(null, '', '#quiz');
   showView('quiz');
 }
@@ -151,6 +153,46 @@ function openResumeModal() {
 
 function closeResumeModal() {
   document.getElementById('resume-modal').classList.remove('open');
+}
+
+// ─── Cross-tab sync ─────────────────────────────────────────────────────────────
+// When the quiz advances in one tab, every other tab currently showing the quiz
+// is marked stale and reloads the next time it becomes visible/focused — so two
+// tabs can never sit on divergent progress. The active tab that made the change
+// is never reloaded (BroadcastChannel doesn't echo to the sender; storage events
+// don't fire in the originating tab).
+let viewStale = false;
+const quizChannel = ('BroadcastChannel' in window) ? new BroadcastChannel('hq_quiz') : null;
+
+function broadcastProgress() {
+  if (quizChannel) quizChannel.postMessage({ type: 'progress' });
+}
+
+function markStaleFromOtherTab() {
+  // Only the quiz view can diverge between tabs; leave intro/result/error alone.
+  if (state.view === 'quiz') viewStale = true;
+}
+
+function reloadIfStale() {
+  if (viewStale && document.visibilityState === 'visible') location.reload();
+}
+
+function initCrossTabSync() {
+  if (quizChannel) {
+    quizChannel.addEventListener('message', (e) => {
+      if (e.data && e.data.type === 'progress') markStaleFromOtherTab();
+    });
+  } else {
+    // Fallback for browsers without BroadcastChannel: localStorage writes fire a
+    // 'storage' event in every other tab on the same origin.
+    window.addEventListener('storage', (e) => {
+      if (e.key === LS_ANSWERS || e.key === LS_INDEX) markStaleFromOtherTab();
+    });
+  }
+  // Reload a stale tab only once it's actually being looked at again, never out
+  // from under the user mid-question.
+  document.addEventListener('visibilitychange', reloadIfStale);
+  window.addEventListener('focus', reloadIfStale);
 }
 
 // ─── Quiz rendering ───────────────────────────────────────────────────────────
@@ -220,6 +262,7 @@ function selectAnswer(answerIdx, btnEl) {
       finishQuiz();
     } else {
       localStorage.setItem(LS_INDEX, state.questionIndex);
+      broadcastProgress();
       state.transitioning = false;
       renderQuestion();
     }
@@ -232,6 +275,7 @@ function finishQuiz() {
   // Clear local storage
   localStorage.removeItem(LS_ANSWERS);
   localStorage.removeItem(LS_INDEX);
+  broadcastProgress();
 
   // Navigate to result with hash encoding
   const hash = encodeResults(pct);
