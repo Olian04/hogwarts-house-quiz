@@ -9,6 +9,9 @@ const state = {
   view: null,
   questionIndex: 0,
   answers: {},
+  // Per-question shuffled display order (qId → original indices), kept stable for
+  // the session so revisiting a question doesn't reshuffle its options.
+  orders: {},
   transitioning: false
 };
 
@@ -32,6 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-start').addEventListener('click', startQuiz);
   document.getElementById('btn-error-start').addEventListener('click', startQuiz);
   document.getElementById('btn-home').addEventListener('click', goHome);
+  document.getElementById('btn-prev').addEventListener('click', goPrev);
+  document.getElementById('btn-next').addEventListener('click', goNext);
   document.addEventListener('keydown', handleQuizKeys);
   initResumeModal();
   initCrossTabSync();
@@ -124,6 +129,7 @@ function startQuiz() {
 function beginFreshQuiz() {
   state.questionIndex = 0;
   state.answers = {};
+  state.orders = {};
   localStorage.removeItem(LS_ANSWERS);
   localStorage.removeItem(LS_INDEX);
   broadcastProgress();
@@ -139,6 +145,7 @@ function resumeSavedQuiz() {
   }
   state.answers = saved.answers;
   state.questionIndex = saved.idx;
+  state.orders = {};
   history.pushState(null, '', '#quiz');
   showView('quiz');
 }
@@ -244,13 +251,19 @@ function renderQuestion() {
   typeEl.textContent = q.type;
   textEl.textContent = q.text;
 
-  // Shuffle display order each render, but keep each answer's ORIGINAL index so
-  // scoring and local storage stay stable regardless of how it's shown.
-  const order = q.answers.map((_, i) => i);
-  for (let i = order.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [order[i], order[j]] = [order[j], order[i]];
+  // Shuffle display order once per question and remember it (so going back and
+  // forth doesn't reshuffle), keeping each answer's ORIGINAL index for scoring.
+  let order = state.orders[q.id];
+  if (!order) {
+    order = q.answers.map((_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    state.orders[q.id] = order;
   }
+
+  const chosen = state.answers[q.id]; // undefined until answered
 
   gridEl.innerHTML = '';
   order.forEach((origIdx, displayPos) => {
@@ -261,9 +274,10 @@ function renderQuestion() {
     item.className = 'answer-item';
 
     const btn = document.createElement('button');
-    btn.className = 'answer-btn';
+    btn.className = 'answer-btn' + (origIdx === chosen ? ' selected' : '');
     btn.innerHTML = `<span class="answer-letter">${letter}</span><span class="answer-text">${answer.text}</span>`;
     btn.setAttribute('aria-label', `Answer ${letter}: ${answer.text}`);
+    if (origIdx === chosen) btn.setAttribute('aria-pressed', 'true');
     btn.addEventListener('click', () => selectAnswer(origIdx, btn));
     item.appendChild(btn);
 
@@ -279,9 +293,52 @@ function renderQuestion() {
     gridEl.appendChild(item);
   });
 
+  updateQuizNav();
+
   // Move focus to the new question so keyboard/screen-reader users land on the
   // content (and the heading text is announced).
   textEl.focus({ preventScroll: true });
+}
+
+// Show/hide the Back and Next controls for the current question.
+function updateQuizNav() {
+  const prev = document.getElementById('btn-prev');
+  const next = document.getElementById('btn-next');
+  const answered = state.answers[QUESTIONS[state.questionIndex].id] !== undefined;
+  prev.hidden = state.questionIndex === 0;
+  next.hidden = !answered;
+  next.textContent = state.questionIndex >= QUESTIONS.length - 1 ? 'Reveal ›' : 'Next ›';
+}
+
+// Go back to the previous question (answers are preserved so you can change them).
+function goPrev() {
+  if (state.transitioning || state.questionIndex === 0) return;
+  state.questionIndex--;
+  localStorage.setItem(LS_INDEX, state.questionIndex);
+  broadcastProgress();
+  renderQuestion();
+}
+
+// Move forward from an already-answered question (keeping the existing answer);
+// finishes the quiz from the last question.
+function goNext() {
+  if (state.transitioning) return;
+  const qId = QUESTIONS[state.questionIndex].id;
+  if (state.answers[qId] === undefined) return;
+  advanceQuestion();
+}
+
+// Advance one question, or finish the quiz if we're past the last one.
+function advanceQuestion() {
+  state.questionIndex++;
+  if (state.questionIndex >= QUESTIONS.length) {
+    finishQuiz();
+  } else {
+    localStorage.setItem(LS_INDEX, state.questionIndex);
+    broadcastProgress();
+    state.transitioning = false;
+    renderQuestion();
+  }
 }
 
 // Number (1–4) and letter (A–D) keys pick the answer in that displayed position,
@@ -289,6 +346,13 @@ function renderQuestion() {
 function handleQuizKeys(e) {
   if (state.view !== 'quiz' || state.transitioning) return;
   if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+  // Arrow keys navigate between questions.
+  if (e.key === 'ArrowLeft' && state.questionIndex > 0) { e.preventDefault(); goPrev(); return; }
+  if (e.key === 'ArrowRight' && state.answers[QUESTIONS[state.questionIndex].id] !== undefined) {
+    e.preventDefault(); goNext(); return;
+  }
+
   const k = e.key.toLowerCase();
   let idx = -1;
   if (k >= '1' && k <= '4') idx = k.charCodeAt(0) - 49;       // '1'→0 … '4'→3
@@ -303,30 +367,32 @@ function handleQuizKeys(e) {
 
 function selectAnswer(answerIdx, btnEl) {
   if (state.transitioning) return;
-  state.transitioning = true;
 
-  // Visual feedback
-  document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
-  btnEl.classList.add('selected');
-
-  // Save answer
   const qId = QUESTIONS[state.questionIndex].id;
+  const firstTime = state.answers[qId] === undefined;
+
   state.answers[qId] = answerIdx;
   localStorage.setItem(LS_ANSWERS, JSON.stringify(state.answers));
 
-  setTimeout(() => {
-    state.questionIndex++;
+  // Highlight the chosen option.
+  document.querySelectorAll('.answer-btn').forEach(b => {
+    b.classList.remove('selected');
+    b.removeAttribute('aria-pressed');
+  });
+  btnEl.classList.add('selected');
+  btnEl.setAttribute('aria-pressed', 'true');
 
-    if (state.questionIndex >= QUESTIONS.length) {
-      // Quiz complete
-      finishQuiz();
-    } else {
-      localStorage.setItem(LS_INDEX, state.questionIndex);
-      broadcastProgress();
-      state.transitioning = false;
-      renderQuestion();
-    }
-  }, 420);
+  if (!firstTime) {
+    // Revisiting a question to change the answer: stay put so they can review,
+    // and surface the Next control instead of jumping ahead.
+    updateQuizNav();
+    return;
+  }
+
+  // First time answering this question: keep the snappy auto-advance.
+  state.transitioning = true;
+  document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
+  setTimeout(advanceQuestion, 420);
 }
 
 function finishQuiz() {
