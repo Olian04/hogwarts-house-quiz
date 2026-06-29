@@ -12,6 +12,17 @@ const state = {
   transitioning: false
 };
 
+// Hidden audit mode: open any URL with ?reasoning to reveal, under each answer,
+// the exact leanings it awards and the rationale behind them. Read once at load.
+const REASONING_MODE = new URLSearchParams(window.location.search).has('reasoning');
+
+function formatLeanings(scores) {
+  return Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .map(([h, v]) => `${HOUSES[h].name} +${v}`)
+    .join(' · ');
+}
+
 // ─── Init ────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -232,12 +243,27 @@ function renderQuestion() {
   order.forEach((origIdx, displayPos) => {
     const answer = q.answers[origIdx];
     const letter = String.fromCharCode(65 + displayPos);
+
+    const item = document.createElement('div');
+    item.className = 'answer-item';
+
     const btn = document.createElement('button');
     btn.className = 'answer-btn';
     btn.innerHTML = `<span class="answer-letter">${letter}</span><span class="answer-text">${answer.text}</span>`;
     btn.setAttribute('aria-label', `Answer ${letter}: ${answer.text}`);
     btn.addEventListener('click', () => selectAnswer(origIdx, btn));
-    gridEl.appendChild(btn);
+    item.appendChild(btn);
+
+    if (REASONING_MODE) {
+      const r = document.createElement('div');
+      r.className = 'answer-reasoning';
+      r.innerHTML =
+        `<div class="reasoning-leanings">${formatLeanings(answer.scores)}</div>` +
+        `<div class="reasoning-why">${answer.why || ''}</div>`;
+      item.appendChild(r);
+    }
+
+    gridEl.appendChild(item);
   });
 }
 
@@ -303,6 +329,8 @@ function finalizeResult(pct, chosen) {
 // player picks among the tied houses, and that choice is recorded in the result.
 function showSortingChoice(pct, tied) {
   const container = document.getElementById('choice-options');
+  // Drives the layout: 2 → one row, 3 → one row, 4 → 2×2. Never a lone card.
+  container.dataset.count = tied.length;
   container.innerHTML = '';
   tied.forEach(h => {
     const house = HOUSES[h];
@@ -443,9 +471,21 @@ function getWinningHouse(pct) {
 // ─── Result rendering ─────────────────────────────────────────────────────────
 
 function renderResult(pct) {
-  // A player-resolved Gryffindor/Slytherin tie carries its winner explicitly.
+  // A player-resolved tie carries its winner explicitly; otherwise derive it.
   const winner = pct.chosen || getWinningHouse(pct);
   const house = HOUSES[winner];
+
+  // If this result came from a tie the player settled, surface that — the tied
+  // houses are exactly those sharing the top leaning.
+  let tiebreakNote = '';
+  if (pct.chosen) {
+    const max = Math.max(...['G', 'H', 'R', 'S'].map(h => pct[h]));
+    const names = ['G', 'H', 'R', 'S'].filter(h => pct[h] === max).map(h => HOUSES[h].name);
+    const list = names.length > 1
+      ? names.slice(0, -1).join(', ') + ' & ' + names[names.length - 1]
+      : names[0];
+    tiebreakNote = `<div class="tiebreak-note fade-in-delayed">The Hat was torn between ${list} — and you chose <strong>${house.name}</strong>.</div>`;
+  }
   const container = document.getElementById('view-result');
 
   // Apply house theme to result view
@@ -470,6 +510,8 @@ function renderResult(pct) {
           <div class="house-tagline" style="color: ${house.textOnDark};">${house.tagline}</div>
         </div>
       </div>
+
+      ${tiebreakNote}
 
       <div class="result-desc fade-in-delayed">
         <p class="house-description">${house.description}</p>

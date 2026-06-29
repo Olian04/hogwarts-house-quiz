@@ -538,19 +538,42 @@ body::before {
   overflow: hidden;
   /* Prevent double-tap zoom on iOS */
   touch-action: manipulation;
-  /* Each option drops in just after the question card slides in. backwards fill
-     keeps the resting transform clean so :hover / :active still work. */
-  animation: answerIn 0.45s ease backwards;
 }
 
-.answers-grid .answer-btn:nth-child(1) { animation-delay: 0.10s; }
-.answers-grid .answer-btn:nth-child(2) { animation-delay: 0.17s; }
-.answers-grid .answer-btn:nth-child(3) { animation-delay: 0.24s; }
-.answers-grid .answer-btn:nth-child(4) { animation-delay: 0.31s; }
+/* Each option drops in just after the question card slides in. backwards fill
+   keeps the resting transform clean so :hover / :active still work. */
+.answer-item { animation: answerIn 0.45s ease backwards; }
+.answers-grid .answer-item:nth-child(1) { animation-delay: 0.10s; }
+.answers-grid .answer-item:nth-child(2) { animation-delay: 0.17s; }
+.answers-grid .answer-item:nth-child(3) { animation-delay: 0.24s; }
+.answers-grid .answer-item:nth-child(4) { animation-delay: 0.31s; }
 
 @keyframes answerIn {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ?reasoning audit panel shown beneath each answer */
+.answer-reasoning {
+  margin: 0.4rem 0 0.2rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px dashed var(--border-glow);
+  border-radius: var(--radius);
+  background: rgba(10, 6, 20, 0.5);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+.reasoning-leanings {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--gold-light);
+  margin-bottom: 0.3rem;
+}
+.reasoning-why {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #b9ab8c;
 }
 
 .answer-btn::before {
@@ -1098,16 +1121,18 @@ body::before {
 }
 
 .choice-options {
-  display: flex;
+  display: grid;
   gap: 1.1rem;
   justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 1.8rem;
+  margin: 0 auto 1.8rem;
 }
+/* Lay the tied houses out so none is ever stranded alone on a row:
+   2 → one row of two, 3 → one row of three, 4 → a 2×2 block. */
+.choice-options[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 500px; }
+.choice-options[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 720px; }
+.choice-options[data-count="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 500px; }
 
 .choice-card {
-  flex: 1 1 190px;
-  max-width: 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1168,6 +1193,34 @@ body::before {
   color: var(--muted);
   text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 12px rgba(6,4,15,0.95);
 }
+
+/* Keep three- and four-way layouts comfortable on small screens. */
+@media (max-width: 480px) {
+  .choice-options { gap: 0.6rem; }
+  .choice-card { padding: 1.1rem 0.55rem; gap: 0.4rem; }
+  .choice-card img { width: clamp(50px, 15vw, 92px); }
+  .choice-house-name { font-size: 1rem; }
+  .choice-house-tag { font-size: 0.6rem; letter-spacing: 0.12em; }
+}
+
+/* Tiebreak note on the result page */
+.tiebreak-note {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: clamp(0.82rem, 2.4vw, 0.95rem);
+  color: #c8b898;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: -1rem auto 2rem;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(10, 6, 20, 0.5);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+.tiebreak-note strong { color: var(--house-secondary); font-weight: bold; }
+.tiebreak-note.fade-in-delayed { animation-delay: 0.7s; }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    RESUME MODAL

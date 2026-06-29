@@ -22,9 +22,14 @@ backend.
 - **Ceiling-scaled leanings.** Each house's percentage is scored against its own
   theoretical maximum, so a result reads as "how close did you come to the most
   Ravenclaw-ish answer every time" rather than a slice of a pie.
+- **The Sorting Hat's choice.** When houses tie for the top, the Hat doesn't pick
+  for you — it tells you every tied house wants you and lets you *choose* where
+  you belong (an homage to Harry choosing Gryffindor over Slytherin). The choice
+  is recorded in the result link.
 - **Shareable result links.** Results encode into a short, opaque, checksummed
   URL hash (e.g. `#r/ISswHCM`) that reopens the exact result without re-taking
-  the quiz. Tampered or broken links land on a friendly error page.
+  the quiz — including a tiebreak choice, if one was made. Tampered or broken
+  links land on a friendly error page.
 - **Resume support.** In-progress quizzes are saved to `localStorage`. Returning
   to the start prompts you to resume or start over, and progress is shared across
   tabs — advancing in one tab invalidates the others, which reload on refocus.
@@ -69,6 +74,11 @@ exactly 20 times, so all four houses share an identical theoretical maximum
 (**40**) and total pool (**60**) — no house is over-represented. Your leaning for
 a house is `round(points / 40 × 100)`, and the highest leaning wins (ties break
 Gryffindor → Hufflepuff → Ravenclaw → Slytherin).
+
+Every house can reach 100%, and the random-play winner distribution is even
+(~25% each). Open the quiz with the hidden **`?reasoning`** flag (e.g.
+`…/index.html?reasoning`) to see, under each answer, the exact leanings it awards
+and why.
 
 The full design — including every question, answer, and the reasoning behind the
 scoring — lives in **[QUIZ.md](QUIZ.md)**.
