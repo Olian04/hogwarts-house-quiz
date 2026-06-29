@@ -936,6 +936,48 @@ body::before {
   transform: scale(0.97);
 }
 
+/* ─── Sponsor plug ───────────────────────────────────────────────────────────── */
+.sponsor-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.sponsor-text {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+  letter-spacing: 0.03em;
+}
+
+.sponsor-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.3rem;
+  min-height: 42px;
+  border: 1px solid var(--border-glow);
+  border-radius: 50px;
+  background: rgba(219, 97, 162, 0.08);
+  color: var(--cream);
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background var(--transition), box-shadow var(--transition), transform 0.15s ease;
+}
+.sponsor-link svg { color: #db61a2; flex-shrink: 0; }
+
+@media (hover: hover) {
+  .sponsor-link:hover {
+    background: rgba(219, 97, 162, 0.16);
+    box-shadow: 0 0 18px rgba(219, 97, 162, 0.25);
+    transform: translateY(-1px);
+  }
+}
+.sponsor-link:active { transform: scale(0.97); }
+
 /* ═══════════════════════════════════════════════════════════════════════════════
    RESUME MODAL
 ═══════════════════════════════════════════════════════════════════════════════ */
@@ -1037,6 +1079,7 @@ body::before {
 .notable-section.fade-in-delayed  { animation-delay: 1.45s; }
 .share-section.fade-in-delayed    { animation-delay: 1.60s; }
 .retake-section.fade-in-delayed   { animation-delay: 1.75s; }
+.sponsor-section.fade-in-delayed  { animation-delay: 1.90s; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
