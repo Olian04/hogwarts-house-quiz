@@ -350,13 +350,25 @@ function finishQuiz() {
   finalizeResult(pct, null);
 }
 
+// How long the "Sorting Hat is deciding…" beat lingers before the reveal.
+const SUSPENSE_MS = 1700;
+
 // Commit to a result: stamp the URL (recording the player's choice if they made
-// one) and show the result view.
+// one) and show the result view. On a fresh, untied completion we play a short
+// suspense beat first; a player-resolved tie (chosen set) goes straight to the
+// reveal, since the choice screen was already the dramatic moment.
 function finalizeResult(pct, chosen) {
   const result = { G: pct.G, H: pct.H, R: pct.R, S: pct.S };
   if (chosen) result.chosen = chosen;
   history.replaceState(null, '', encodeResults(pct, chosen));
-  showView('result', result);
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!chosen && !reduceMotion) {
+    showView('suspense');
+    setTimeout(() => showView('result', result), SUSPENSE_MS);
+  } else {
+    showView('result', result);
+  }
 }
 
 // The Sorting Hat's choice screen, shown whenever houses tie for the top. The
