@@ -1,6 +1,8 @@
-// Session storage keys
-const SS_ANSWERS = 'hq_answers';
-const SS_INDEX = 'hq_index';
+// Local storage keys. Local (not session) storage so an in-progress quiz is
+// shared across tabs — e.g. opening someone's shared result link in a new tab
+// won't hide the quiz you have underway.
+const LS_ANSWERS = 'hq_answers';
+const LS_INDEX = 'hq_index';
 
 // App state
 const state = {
@@ -33,7 +35,7 @@ function route() {
     return;
   }
 
-  // Restore an in-progress quiz from session storage (e.g. on refresh).
+  // Restore an in-progress quiz from local storage (e.g. on refresh).
   const saved = getSavedQuiz();
   if (saved) {
     state.answers = saved.answers;
@@ -45,11 +47,11 @@ function route() {
   showView('intro');
 }
 
-// Returns a usable in-progress quiz from session storage, or null. A quiz only
+// Returns a usable in-progress quiz from local storage, or null. A quiz only
 // counts as resumable if at least one answer is saved and the index is valid.
 function getSavedQuiz() {
-  const saved = sessionStorage.getItem(SS_ANSWERS);
-  const savedIdx = sessionStorage.getItem(SS_INDEX);
+  const saved = localStorage.getItem(LS_ANSWERS);
+  const savedIdx = localStorage.getItem(LS_INDEX);
   if (saved === null || savedIdx === null) return null;
 
   let answers;
@@ -80,7 +82,7 @@ function showView(name, data) {
   state.view = name;
 }
 
-// Return to the start page. Any in-progress quiz is left untouched in session
+// Return to the start page. Any in-progress quiz is left untouched in local
 // storage so it can be resumed from the intro's start button.
 function goHome() {
   history.pushState(null, '', window.location.pathname);
@@ -100,8 +102,8 @@ function startQuiz() {
 function beginFreshQuiz() {
   state.questionIndex = 0;
   state.answers = {};
-  sessionStorage.removeItem(SS_ANSWERS);
-  sessionStorage.removeItem(SS_INDEX);
+  localStorage.removeItem(LS_ANSWERS);
+  localStorage.removeItem(LS_INDEX);
   history.pushState(null, '', '#quiz');
   showView('quiz');
 }
@@ -177,7 +179,7 @@ function renderQuestion() {
   textEl.textContent = q.text;
 
   // Shuffle display order each render, but keep each answer's ORIGINAL index so
-  // scoring and session storage stay stable regardless of how it's shown.
+  // scoring and local storage stay stable regardless of how it's shown.
   const order = q.answers.map((_, i) => i);
   for (let i = order.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -208,7 +210,7 @@ function selectAnswer(answerIdx, btnEl) {
   // Save answer
   const qId = QUESTIONS[state.questionIndex].id;
   state.answers[qId] = answerIdx;
-  sessionStorage.setItem(SS_ANSWERS, JSON.stringify(state.answers));
+  localStorage.setItem(LS_ANSWERS, JSON.stringify(state.answers));
 
   setTimeout(() => {
     state.questionIndex++;
@@ -217,7 +219,7 @@ function selectAnswer(answerIdx, btnEl) {
       // Quiz complete
       finishQuiz();
     } else {
-      sessionStorage.setItem(SS_INDEX, state.questionIndex);
+      localStorage.setItem(LS_INDEX, state.questionIndex);
       state.transitioning = false;
       renderQuestion();
     }
@@ -227,9 +229,9 @@ function selectAnswer(answerIdx, btnEl) {
 function finishQuiz() {
   const pct = calculateScores(state.answers);
 
-  // Clear session storage
-  sessionStorage.removeItem(SS_ANSWERS);
-  sessionStorage.removeItem(SS_INDEX);
+  // Clear local storage
+  localStorage.removeItem(LS_ANSWERS);
+  localStorage.removeItem(LS_INDEX);
 
   // Navigate to result with hash encoding
   const hash = encodeResults(pct);
