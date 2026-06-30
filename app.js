@@ -726,6 +726,8 @@ function renderResult(pct) {
         </button>
       </div>
 
+      <div class="hr-ornament fade-in-delayed" aria-hidden="true"><span>✦</span></div>
+
       <div class="sponsor-section fade-in-delayed">
         <p class="sponsor-text">Enjoyed the Sorting?</p>
         <a class="sponsor-link" href="https://github.com/sponsors/Olian04" target="_blank" rel="noopener" aria-label="Sponsor the maker on GitHub">
