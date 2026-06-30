@@ -439,8 +439,26 @@ function finalizeResult(pct, chosen) {
 
 // The Sorting Hat's choice screen, shown whenever houses tie for the top. The
 // player picks among the tied houses, and that choice is recorded in the result.
+// The quality the Hat names for each house, phrased to drop into "There is … here".
+const CHOICE_QUALITY = { G: 'courage', H: 'a loyal heart', R: 'a fine mind', S: 'cunning' };
+
+// Build the Hat's line so it praises only the houses actually in this tie — a
+// Gryffindor/Slytherin tie hears "courage … and cunning", not "a fine mind" too.
+function choiceQuote(tied) {
+  const phrases = HOUSE_ORDER.filter(h => tied.includes(h)).map(h => CHOICE_QUALITY[h]);
+  const [first, ...rest] = phrases;
+  const qualities = rest.length
+    ? `There is ${first} here — and ${rest.join(', and ')}.`
+    : `There is ${first} here.`;
+  const where = tied.length === 2 ? 'either of them' : 'any of them';
+  return `“Difficult. Very difficult. ${qualities} More than one house would be ` +
+         `proud to claim you, and you would do well in ${where}. So tell me…”`;
+}
+
 function showSortingChoice(pct, tied) {
   const container = document.getElementById('choice-options');
+  const quote = document.querySelector('#view-choice .choice-text');
+  if (quote) quote.textContent = choiceQuote(tied);
   // Drives the layout: 2 → one row, 3 → one row, 4 → 2×2. Never a lone card.
   container.dataset.count = tied.length;
   container.innerHTML = '';

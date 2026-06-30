@@ -1,6 +1,6 @@
 // Service worker: makes the quiz installable and fully usable offline.
 // Bump CACHE on each release to retire the previous cache.
-const CACHE = 'hq-cache-v2';
+const CACHE = 'hq-cache-v3';
 
 // The app shell + every asset the page needs to run with no network.
 const ASSETS = [
