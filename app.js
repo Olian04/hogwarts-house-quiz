@@ -481,8 +481,11 @@ function showSortingChoice(pct, tied) {
     container.appendChild(btn);
   });
   showView('choice');
-  const first = container.querySelector('.choice-card');
-  if (first) first.focus();
+  // Focus the heading, not a card — on a screen meant to feel like every tied
+  // house wants you equally, a focus ring on one card reads as a pre-pick.
+  // Keyboard users still Tab into the cards from here.
+  const heading = document.querySelector('#view-choice .choice-title');
+  if (heading) heading.focus();
 }
 
 // ─── Score calculation ────────────────────────────────────────────────────────

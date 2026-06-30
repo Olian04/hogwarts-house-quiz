@@ -855,6 +855,9 @@ body::before {
   line-height: 1.8;
   margin-bottom: 1.2rem;
   overflow-wrap: break-word;
+  /* Left-aligned for readability: centred multi-line prose makes every line
+     start at a different point. Heading/tagline/quote/notables stay centred. */
+  text-align: left;
 }
 
 .house-quote {
@@ -931,7 +934,10 @@ body::before {
 
 .bar-row {
   display: grid;
-  grid-template-columns: 140px 1fr 44px;
+  /* Label sized to its content so house names always show in full; the bar (1fr)
+     absorbs the slack. Grid shares column widths across rows, so the longest name
+     sets the column and every row stays aligned. */
+  grid-template-columns: auto 1fr 44px;
   align-items: center;
   gap: 0.75rem;
 }
@@ -956,8 +962,6 @@ body::before {
 
 .bar-name {
   font-family: var(--font-serif);
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .bar-track {
@@ -972,9 +976,10 @@ body::before {
   height: 100%;
   border-radius: 7px;
   /* Each .bar-row carries a .house-* class, so the fill picks up that house's
-     colours. The old two-tone look: a dark house shade fading up into the warm
-     metal accent (e.g. Gryffindor dark-red → gold). */
-  background: linear-gradient(90deg, var(--house-deep), var(--house-secondary));
+     colours. Two-tone: the readable shield colour fading into the warm metal
+     accent (e.g. Gryffindor scarlet → gold). Starting at the shield colour (not
+     the near-black deep shade) keeps even short bars visible on the dark track. */
+  background: linear-gradient(90deg, var(--house-primary), var(--house-secondary));
   transition: width 1.4s cubic-bezier(0.25, 1, 0.5, 1);
   position: relative;
   overflow: hidden;
@@ -1567,7 +1572,7 @@ body::before {
   }
 
   .bar-row {
-    grid-template-columns: 100px 1fr 38px;
+    grid-template-columns: auto 1fr 38px;
     gap: 0.5rem;
   }
   .bar-crest  { width: 18px; }
@@ -1596,7 +1601,7 @@ body::before {
   }
 
   .bar-row {
-    grid-template-columns: 82px 1fr 34px;
+    grid-template-columns: auto 1fr 34px;
     gap: 0.4rem;
   }
   .bar-crest { width: 15px; }
