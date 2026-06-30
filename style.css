@@ -218,7 +218,8 @@ body::before {
    INTRO VIEW
 ═══════════════════════════════════════════════════════════════════════════════ */
 #view-intro,
-#view-error {
+#view-error,
+#view-about {
   /* align-items centers horizontally; we do NOT use justify-content: center here.
      Instead we use margin-block: auto on the child so that on short viewports the
      content centers, but on tall content it starts from the top and is scrollable. */
@@ -420,6 +421,57 @@ body::before {
   transform: translateY(0) scale(0.98);
   box-shadow: 0 0 15px rgba(200,148,30,0.4), 0 2px 8px rgba(0,0,0,0.4);
 }
+
+/* ─── About: entry link on the intro + the About view ──────────────────────────── */
+.intro-about-link {
+  display: inline-block;
+  margin-top: 1.1rem;
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  opacity: 0.75;
+  border-bottom: 1px solid transparent;
+  transition: opacity var(--transition), border-color var(--transition);
+}
+@media (hover: hover) {
+  .intro-about-link:hover { opacity: 1; border-bottom-color: var(--border-glow); }
+}
+
+/* The About content is left-aligned prose (cards), unlike the centred intro. */
+.about-content { text-align: center; }
+
+.about-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-bottom: 1.6rem;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+.about-meta .about-dot { opacity: 0.5; }
+.about-meta .about-date { color: var(--muted); }
+
+.about-card { margin-bottom: 1.1rem; }
+.about-card p { text-align: left; }
+.about-card .card-title { text-align: left; }
+
+.about-links { margin-top: 0.4rem; }
+.about-links a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-glow);
+  transition: color var(--transition), border-color var(--transition);
+}
+@media (hover: hover) {
+  .about-links a:hover { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+}
+
+.about-back { margin-top: 1.8rem; }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    QUIZ VIEW

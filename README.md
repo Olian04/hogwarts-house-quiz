@@ -46,6 +46,9 @@ backend.
   Mastodon, Weibo/QZone) curated by device and system language.
 - **Installable & offline.** Ships a web app manifest, full favicon/icon set,
   and a service worker that caches the app shell so it works with no network.
+- **About page.** Reachable from the start screen (`#about`): the release version
+  and date, a link to the source, the fan-project and AI-usage disclaimers, and a
+  way to support the maker.
 
 ## Running it
 

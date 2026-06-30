@@ -14,7 +14,8 @@ python3 -m http.server 8000   # then visit http://localhost:8000
 ## Files
 - `index.html` — markup for every view: `#view-intro`, `#view-quiz`,
   `#view-suspense`, `#view-result`, `#view-choice` (tie-break), `#view-error`,
-  and the resume modal. Views are toggled with the `.active` class.
+  `#view-about` (reached via `#about`), and the resume modal. Views are toggled
+  with the `.active` class.
 - `style.css` — all styling, theming, and animations.
 - `quiz-data.js` — `HOUSES` (display data) and `QUESTIONS` (20 questions, each
   answer carrying `scores` and a `why`). Browser globals (no modules).
@@ -63,6 +64,12 @@ question heading / result house name on view changes. The progress bar updates
 `sw.js` precaches the app shell + assets (stale-while-revalidate for assets,
 network-first for navigations). **Bump `CACHE` in `sw.js` on each release** so
 clients pick up new code.
+
+## Releases / About page
+`APP_VERSION` and `RELEASE_DATE` in `app.js` are the single source of truth for the
+build identity shown on the About page (`#about`). **Bump them — and `CACHE` in
+`sw.js` — on each release.** The About view (`#view-about`) is static markup in
+`index.html`; `populateAbout()` fills the version/date line at load.
 
 ## Testing
 There is no automated test suite (deliberately kept dependency-free). Verify

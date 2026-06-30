@@ -19,6 +19,11 @@ const state = {
 // the exact leanings it awards and the rationale behind them. Read once at load.
 const REASONING_MODE = new URLSearchParams(window.location.search).has('reasoning');
 
+// Release identity, surfaced on the About page (#about). Single source of truth —
+// bump these (and the CACHE name in sw.js) on each release.
+const APP_VERSION = '1.0.0';
+const RELEASE_DATE = '2026-06-30'; // ISO; rendered in a friendlier form on the page
+
 function formatLeanings(scores) {
   return Object.entries(scores)
     .sort((a, b) => b[1] - a[1])
@@ -30,11 +35,13 @@ function formatLeanings(scores) {
 
 document.addEventListener('DOMContentLoaded', () => {
   generateParticles();
+  populateAbout();
   route();
   window.addEventListener('hashchange', route);
   document.getElementById('btn-start').addEventListener('click', startQuiz);
   document.getElementById('btn-error-start').addEventListener('click', startQuiz);
   document.getElementById('btn-home').addEventListener('click', goHome);
+  document.getElementById('btn-about-home').addEventListener('click', goHome);
   document.getElementById('btn-prev').addEventListener('click', goPrev);
   document.getElementById('btn-next').addEventListener('click', goNext);
   document.addEventListener('keydown', handleQuizKeys);
@@ -49,6 +56,22 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Fill the About page's release line from the constants above. Runs once at load;
+// the elements always exist in the markup, so the view is ready before it's shown.
+function populateAbout() {
+  const vEl = document.getElementById('about-version');
+  const dEl = document.getElementById('about-date');
+  if (vEl) vEl.textContent = 'v' + APP_VERSION;
+  if (dEl) {
+    let label = RELEASE_DATE;
+    const d = new Date(RELEASE_DATE);
+    if (!isNaN(d)) {
+      label = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+    dEl.textContent = 'Released ' + label;
+  }
+}
+
 function route() {
   const hash = window.location.hash;
 
@@ -57,6 +80,13 @@ function route() {
   if (hash.startsWith(HASH_PREFIX)) {
     const decoded = decodeResults(hash);
     showView(decoded ? 'result' : 'error', decoded);
+    return;
+  }
+
+  // The About page. Checked before the saved-quiz restore so it's reachable even
+  // with a quiz in progress (the quiz stays saved and resumable in the meantime).
+  if (hash === '#about') {
+    showView('about');
     return;
   }
 
