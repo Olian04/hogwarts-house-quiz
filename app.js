@@ -105,6 +105,12 @@ function showView(name, data) {
   el.classList.add('active');
   state.view = name;
 
+  // Reset scroll to the top so the incoming view animates in from where it's
+  // visible — otherwise a result page scrolled to its "Start" button would
+  // swap to an intro that's parked below the fold (a blank screen until you
+  // scroll up). 'instant' overrides the CSS smooth-scroll so there's no glide.
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
   if (name === 'quiz') renderQuestion();
   if (name === 'result') renderResult(data);
 }
