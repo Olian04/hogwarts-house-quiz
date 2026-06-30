@@ -481,7 +481,9 @@ body::before {
   .about-links a:hover { color: var(--gold-light); border-bottom-color: var(--gold-light); }
 }
 
-.about-back { margin-top: 1.8rem; }
+/* Subtle home-style control (matches the result page's "Back to start"), so the
+   About page doesn't end on a heavy gold primary button. */
+.about-home { display: flex; margin: 1.8rem auto 0; }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    QUIZ VIEW
