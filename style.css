@@ -55,7 +55,9 @@ body {
   background: var(--bg);
   color: var(--cream);
   min-height: 100vh;
-  min-height: 100dvh;
+  /* svh (smallest viewport) — never taller than the visible area, so mobile
+     browsers don't add a phantom toolbar-height scroll when content is short. */
+  min-height: 100svh;
   overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -168,14 +170,14 @@ body::before {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh;
 }
 
 /* ─── Views ─────────────────────────────────────────────────────────────────── */
 .view {
   display: none;
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh;
 }
 .view.active { display: flex; flex-direction: column; }
 
