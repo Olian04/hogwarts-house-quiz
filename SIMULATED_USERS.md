@@ -112,6 +112,31 @@ month he'll use it to take someone apart. Understanding a system deeply and
 then using that understanding to come out on top aren't two impulses for him;
 they're one.
 
+## Facet probes (Gryffindor)
+
+Two extra users built to isolate the two faces of Gryffindor after run 1
+showed its signal was diffuse. Same blind protocol.
+
+### Ruben — expected: Gryffindor (daring/adventure facet)
+Ruben, 31, is a BASE jumper and mountain guide. He says yes first and figures
+the rest out on the way down. He chases the edge of fear on purpose — the
+exposed ridge, the cold-water swim, the dare nobody else will take — because a
+life with all the safety rails on doesn't feel like living. He walks into
+parties full of strangers and leaves with new friends, blurts out exactly what
+he thinks, and would rather have a scar and a story than a quiet evening.
+Grand gestures, first one in, last one to flinch. He's not reckless with other
+people — just entirely unafraid of his own skin.
+
+### Ingrid — expected: Gryffindor (moral-courage facet)
+Ingrid, 47, was a compliance officer until she found the fraud. She reported
+it knowing exactly what it would cost her — the career, the friendships, the
+quiet life — and testified alone, in hostile rooms, because it was true and
+someone had to say it. She is private and reserved; she doesn't join clubs,
+doesn't crave excitement, doesn't much care about being liked or remembered,
+and has no ambitions beyond a clear conscience. What she cannot do is stay
+silent while something wrong happens in front of her. She'd do it all again
+tomorrow, alone if she had to.
+
 ## Run log
 
 ### Run 1 — 2026-07-01 (quiz v14) — 10/10 inside expected alignment
@@ -136,3 +161,22 @@ whose Gryffindor leaning came third behind Ravenclaw). One pattern to watch:
 63% where the other three pure users hit 88–90%, and Gryffindor lost the top
 spot in all three of its dual matchups. Not a miss, but the house whose answers
 are hardest to "hit" consistently.
+
+### Run 1 addendum — Gryffindor facet probes
+
+| User   | Expected  | Result     |  G% |  H% |  R% |  S% | G-primaries picked |
+|--------|-----------|------------|----:|----:|----:|----:|--------------------|
+| Ruben  | G (daring)| Gryffindor |  83 |  20 |  20 |  28 | 16/20              |
+| Ingrid | G (moral) | Gryffindor |  53 |  38 |  43 |  18 | 9/20               |
+
+Diagnosis: the 20 Gryffindor-primary answers split into two facets — roughly 11
+express **moral courage** (speak up, own it, take the consequences: Q1, 2, 4, 5,
+6, 8, 11, 12, 15, 19, 20) and 9 express **daring / boldness / spotlight**
+(thrill, extroversion, public vindication, legacy, liberty: Q3, 7, 9, 10, 13,
+14, 16, 17, 18). A pure-daring player hits 83% (comparable to the other pure
+houses); a pure-moral-courage player hits only 53%, with Ravenclaw (43) and
+Hufflepuff (38) close behind — their missed questions leak to the H "care/fair"
+and R "truth" options. Every house's answers cohere around one value except
+Gryffindor's, which encode two — that's why G loses its dual matchups and why
+the morally-brave sort weakest. Both probes still sorted Gryffindor, so this is
+a calibration note, not a failure: 12/12 across the full panel.
