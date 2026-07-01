@@ -1,6 +1,8 @@
 // Service worker: makes the quiz installable and fully usable offline.
-// Bump CACHE on each release to retire the previous cache.
-const CACHE = 'hq-cache-v10';
+// The cache name is derived from APP_VERSION (version.js), the single source of
+// truth shared with the page — bump APP_VERSION there to retire the old cache.
+importScripts('version.js');
+const CACHE = 'hq-cache-v' + APP_VERSION;
 
 // The app shell + every asset the page needs to run with no network.
 const ASSETS = [
@@ -8,6 +10,7 @@ const ASSETS = [
   'index.html',
   'app.js',
   'quiz-data.js',
+  'version.js',
   'style.css',
   'site.webmanifest',
   'assets/Gryffindor.svg',

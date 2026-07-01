@@ -21,6 +21,8 @@ python3 -m http.server 8000   # then visit http://localhost:8000
   answer carrying `scores` and a `why`). Browser globals (no modules).
 - `app.js` — routing, quiz flow, scoring, result-link encoding, sharing,
   cross-tab sync, and service-worker registration. Also a browser global.
+- `version.js` — `APP_VERSION` + `RELEASE_DATE` globals; single source of truth for
+  the release version (drives the About page and the SW cache name).
 - `sw.js` — service worker (offline cache). `site.webmanifest` — PWA manifest.
 - `assets/` — house crest SVGs and the favicon/app-icon set.
 - `QUIZ.md` — full design doc (every question, the scoring model, rationale).
@@ -62,14 +64,19 @@ question heading / result house name on view changes. The progress bar updates
 
 ## Offline / PWA
 `sw.js` precaches the app shell + assets (stale-while-revalidate for assets,
-network-first for navigations). **Bump `CACHE` in `sw.js` on each release** so
-clients pick up new code.
+network-first for navigations). The cache name is `hq-cache-v<APP_VERSION>`, so
+**bumping `APP_VERSION` in `version.js` on each release** retires the old cache and
+makes clients pick up new code (see Releases below).
 
 ## Releases / About page
-`APP_VERSION` and `RELEASE_DATE` in `app.js` are the single source of truth for the
-build identity shown on the About page (`#about`). **Bump them — and `CACHE` in
-`sw.js` — on each release.** The About view (`#view-about`) is static markup in
-`index.html`; `populateAbout()` fills the version/date line at load.
+`APP_VERSION` and `RELEASE_DATE` live in `version.js` — the single source of truth
+for the build identity. `version.js` is loaded as a browser global by `index.html`
+(before `app.js`) and via `importScripts()` by `sw.js`, so the version shown on the
+About page (`#about`) and the service-worker cache name (`hq-cache-v<APP_VERSION>`)
+are always the same number. **Bump `APP_VERSION` in `version.js` on each release** —
+that alone retires the old cache and updates the About page. The About view
+(`#view-about`) is static markup in `index.html`; `populateAbout()` fills the
+version/date line at load.
 
 ## Testing
 There is no automated test suite (deliberately kept dependency-free). Verify

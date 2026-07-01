@@ -19,10 +19,8 @@ const state = {
 // the exact leanings it awards and the rationale behind them. Read once at load.
 const REASONING_MODE = new URLSearchParams(window.location.search).has('reasoning');
 
-// Release identity, surfaced on the About page (#about). Single source of truth —
-// bump these (and the CACHE name in sw.js) on each release.
-const APP_VERSION = '1.0.0';
-const RELEASE_DATE = '2026-06-30'; // ISO; rendered in a friendlier form on the page
+// APP_VERSION and RELEASE_DATE come from version.js (loaded before this script),
+// the single source of truth shared with the service worker's cache name.
 
 function formatLeanings(scores) {
   return Object.entries(scores)
