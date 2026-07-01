@@ -452,7 +452,9 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  margin-bottom: 1.6rem;
+  /* Sits in the header, just above the header→body divider, which supplies the
+     spacing below it. */
+  margin-bottom: 0;
   font-family: var(--font-serif);
   font-size: 0.9rem;
   color: var(--gold);
@@ -482,9 +484,9 @@ body::before {
 }
 
 /* Subtle home-style control (matches the result page's "Back to start"), so the
-   About page doesn't end on a heavy gold primary button. Generous top margin so
-   it reads as a separate footer action, not attached to the sponsor button. */
-.about-home { display: flex; margin: 3rem auto 0; }
+   About page doesn't end on a heavy gold primary button. The footer divider above
+   it supplies the spacing, so no extra top margin is needed. */
+.about-home { display: flex; margin: 0 auto; }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    QUIZ VIEW
