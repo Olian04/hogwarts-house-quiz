@@ -186,6 +186,9 @@ function resumeSavedQuiz() {
 
 // ─── Resume modal ──────────────────────────────────────────────────────────────
 
+// Remembers what had focus before the modal opened, so it can be restored on close.
+let modalOpener = null;
+
 function initResumeModal() {
   const modal = document.getElementById('resume-modal');
 
@@ -201,13 +204,34 @@ function initResumeModal() {
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeResumeModal();
   });
-  // Escape dismisses the modal.
+  // While the modal is open: Escape dismisses it, and Tab is trapped inside it so
+  // keyboard focus can't wander to the (visually obscured) page behind.
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) closeResumeModal();
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') { closeResumeModal(); return; }
+    if (e.key === 'Tab') trapTabKey(e, modal);
   });
 }
 
+// Keep Tab / Shift+Tab cycling within the focusable controls of `container`.
+function trapTabKey(e, container) {
+  const focusable = container.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 function openResumeModal() {
+  modalOpener = document.activeElement;
   const modal = document.getElementById('resume-modal');
   modal.classList.add('open');
   document.getElementById('modal-resume').focus();
@@ -215,6 +239,10 @@ function openResumeModal() {
 
 function closeResumeModal() {
   document.getElementById('resume-modal').classList.remove('open');
+  // Return focus to whatever opened the modal (unless the view is changing, in
+  // which case the incoming view will claim focus right after).
+  if (modalOpener && typeof modalOpener.focus === 'function') modalOpener.focus();
+  modalOpener = null;
 }
 
 // ─── Cross-tab sync ─────────────────────────────────────────────────────────────
@@ -341,7 +369,11 @@ function updateQuizNav() {
   const answered = state.answers[QUESTIONS[state.questionIndex].id] !== undefined;
   prev.hidden = state.questionIndex === 0;
   next.hidden = !answered;
-  next.textContent = state.questionIndex >= QUESTIONS.length - 1 ? 'Reveal ›' : 'Next ›';
+  const last = state.questionIndex >= QUESTIONS.length - 1;
+  next.textContent = last ? 'Reveal ›' : 'Next ›';
+  // Keep the accessible name in step with the visible label (it changes to
+  // "Reveal" on the final question), so screen readers don't say "Next question".
+  next.setAttribute('aria-label', last ? 'Reveal your result' : 'Next question');
 }
 
 // Go back to the previous question (answers are preserved so you can change them).
@@ -688,7 +720,7 @@ function renderResult(pct) {
       </div>
 
       <div class="leanings-section fade-in-delayed">
-        <h3 class="leanings-title">Your House Leanings</h3>
+        <h2 class="leanings-title">Your House Leanings</h2>
         <div class="bars-container" id="bars-container">
           ${sorted.map(h => `
             <div class="bar-row house-${h} ${h === winner ? 'bar-row--winner' : ''}">
@@ -711,14 +743,14 @@ function renderResult(pct) {
       </div>
 
       <div class="share-section fade-in-delayed">
-        <h3 class="share-title">Share Your Result</h3>
+        <h2 class="share-title">Share Your Result</h2>
         <p class="share-subtitle">This link loads your exact result — no re-taking required.</p>
         <div id="share-root"></div>
       </div>
 
       <div class="retake-section fade-in-delayed">
         <button class="btn-retake" id="btn-retake">Retake the Quiz</button>
-        <button class="btn-home result-home" id="btn-result-home" aria-label="Back to the start page">
+        <button class="btn-home result-home" id="btn-result-home">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
           <span>Back to start</span>
         </button>
@@ -874,12 +906,14 @@ function renderShareControls(shareUrl, houseName) {
   if (more.length) {
     const moreGrid = document.createElement('div');
     moreGrid.className = 'share-more';
+    moreGrid.id = 'share-more-grid';
     moreGrid.hidden = true;
     more.forEach(k => moreGrid.appendChild(makeShareButton(k, text, shareUrl)));
 
     const toggle = document.createElement('button');
     toggle.className = 'share-more-toggle';
     toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'share-more-grid');
     toggle.textContent = 'More options';
     toggle.addEventListener('click', () => {
       const opening = moreGrid.hidden;
@@ -899,15 +933,26 @@ function renderShareControls(shareUrl, houseName) {
     `<button class="copy-btn" id="btn-copy" type="button" aria-label="Copy share link"><span id="copy-label">Copy</span></button>`;
   root.appendChild(copyRow);
 
+  // Visually-hidden live region so the copy confirmation is announced (the button's
+  // aria-label would otherwise mask the "Copied!" label change from screen readers).
+  const status = document.createElement('div');
+  status.className = 'sr-only';
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  root.appendChild(status);
+
   const input = copyRow.querySelector('#share-url-input');
   input.value = shareUrl;
   input.addEventListener('click', function () { this.select(); });
   copyRow.querySelector('#btn-copy').addEventListener('click', () => {
     const done = () => {
       const l = document.getElementById('copy-label');
-      if (!l) return;
-      l.textContent = 'Copied!';
-      setTimeout(() => { l.textContent = 'Copy'; }, 2000);
+      if (l) {
+        l.textContent = 'Copied!';
+        setTimeout(() => { l.textContent = 'Copy'; }, 2000);
+      }
+      status.textContent = 'Share link copied to clipboard';
+      setTimeout(() => { status.textContent = ''; }, 2000);
     };
     navigator.clipboard.writeText(shareUrl).then(done).catch(() => {
       input.select();

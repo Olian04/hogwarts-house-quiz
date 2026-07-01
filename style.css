@@ -9,7 +9,7 @@
   --gold:        #c8941e;
   --gold-light:  #f0c040;
   --cream:       #f0e6c8;
-  --muted:       #8a7a60;
+  --muted:       #97876a; /* AA-legible (≥4.5:1) on the dark card and page surfaces */
   --stone:       rgba(255,255,255,0.06);
   --radius:      10px;
   --radius-lg:   18px;
@@ -43,6 +43,17 @@
 
 /* ─── Reset & base ──────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Visually hidden but available to screen readers (e.g. live-region status text). */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 html {
   scroll-behavior: smooth;

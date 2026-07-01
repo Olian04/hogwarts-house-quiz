@@ -60,7 +60,11 @@ Keyboard: `1–4` / `A–D` pick the answer in that displayed position; `←/→
 navigate questions. `:focus-visible` rings on all controls. Focus moves to the
 question heading / result house name on view changes. The progress bar updates
 `aria-valuenow`/`aria-valuetext`. All motion is gated behind
-`prefers-reduced-motion`.
+`prefers-reduced-motion`. The resume modal traps Tab and restores focus to its
+opener on close. The answer options are a labelled `role="group"` (not a list);
+control names track their visible labels (e.g. the final "Reveal" button). Result
+headings run h1→h2. `.sr-only` hides text visually while keeping it for AT (e.g.
+the copy-confirmation live region).
 
 ## Offline / PWA
 `sw.js` precaches the app shell + assets (stale-while-revalidate for assets,

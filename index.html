@@ -151,7 +151,7 @@
         <!-- footer: donate → line → back -->
         <div class="hr-ornament" aria-hidden="true"><span>✦</span></div>
 
-        <button id="btn-about-home" class="btn-home about-home" aria-label="Back to the start page">
+        <button id="btn-about-home" class="btn-home about-home">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
           <span>Back to start</span>
         </button>
@@ -179,10 +179,10 @@
         <div class="question-card" id="question-card">
           <div class="question-type-badge" id="question-type"></div>
           <h2 class="question-text" id="question-text" tabindex="-1"></h2>
-          <div class="answers-grid" id="answers-grid" role="list"></div>
+          <div class="answers-grid" id="answers-grid" role="group" aria-labelledby="question-text"></div>
 
           <div class="quiz-nav">
-            <button id="btn-prev" class="btn-nav" aria-label="Previous question" hidden>‹ Back</button>
+            <button id="btn-prev" class="btn-nav" aria-label="Back to previous question" hidden>‹ Back</button>
             <button id="btn-next" class="btn-nav btn-nav--next" aria-label="Next question" hidden>Next ›</button>
           </div>
         </div>
