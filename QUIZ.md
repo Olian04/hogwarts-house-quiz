@@ -211,7 +211,7 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 | Answer | Points | Why |
 |--------|--------|-----|
 | The freedom to choose your own path, even when you choose badly. | G: 2, R: 1 | Gryffindor (2): liberty is the cause worth the fight. Ravenclaw (1): especially the freedom to think for yourself. |
-| A fair shot for the people who never seem to get one. | H: 2, S: 1 | Hufflepuff (2): fairness for the overlooked. Slytherin (1): a protective instinct for those without leverage. |
+| A fair shot for the people who never seem to get one. | H: 2, G: 1 | Hufflepuff (2): fairness for the overlooked. Gryffindor (1): standing up for people who can't fight back is courage in its plainest form. |
 | The truth of a thing, whatever it turns out to be. | R: 2, G: 1 | Ravenclaw (2): truth is the fundamental value. Gryffindor (1): and it takes courage to face it unflinching. |
 | A wall around the few people who are truly yours. | S: 2, H: 1 | Slytherin (2): you guard your inner circle above all. Hufflepuff (1): loyalty to your own people, fiercely kept. |
 
@@ -246,7 +246,7 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | Points | Why |
 |--------|--------|-----|
-| Doing all the things you were always too afraid to do. | G: 2, R: 1 | Gryffindor (2): facing every fear while there's still time. Ravenclaw (1): a hunger for the experiences you'd been missing. |
+| Settling your unfinished business out loud — the apology you owed, the wrong you never called out, the truth you never told. | G: 2, R: 1 | Gryffindor (2): spending the year facing the things that took nerve, not the things that took time. Ravenclaw (1): the untold truth still needs telling. |
 | Making sure the people you love will be steady long after you're gone. | H: 2, R: 1 | Hufflepuff (2): their wellbeing comes before your own experience. Ravenclaw (1): and you plan it out carefully. |
 | Getting everything you've figured out down on paper before it's lost. | R: 2, G: 1 | Ravenclaw (2): preserve and pass on what you know. Gryffindor (1): a bid to make your understanding count. |
 | Spending every bit of influence you have on one thing that will outlast you. | S: 2, G: 1 | Slytherin (2): leverage focused for maximum, lasting impact. Gryffindor (1): spent on something that genuinely matters. |
@@ -282,7 +282,7 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 
 | Answer | Points | Why |
 |--------|--------|-----|
-| A pull to prove them wrong somewhere everyone can see it. | G: 2, S: 1 | Gryffindor (2): you answer the slight out loud, in the open. Slytherin (1): a competitive drive to win the standing back. |
+| An itch to go do the exact thing they say you can't — no speeches, just the doing. | G: 2, S: 1 | Gryffindor (2): defiance answered with action, not argument. Slytherin (1): there's a quiet competitive fire in it all the same. |
 | Unbothered — what they think doesn't touch what you know about yourself. | H: 2, G: 1 | Hufflepuff (2): grounded, quiet self-worth. Gryffindor (1): a steady certainty in who you are. |
 | Curious about what's making them read you that way. | R: 2, S: 1 | Ravenclaw (2): you analyse the misperception itself. Slytherin (1): and quietly study the angle it gives you. |
 | Quietly pleased — being underestimated is a head start. | S: 2, R: 1 | Slytherin (2): being underestimated is an advantage to exploit. Ravenclaw (1): you coolly see the edge it hands you. |
@@ -319,7 +319,7 @@ Questions like Q17 ("You see yourself as...") and Q9 ("Which environment feels l
 | Answer | Points | Why |
 |--------|--------|-----|
 | Give it to them straight. Softening it would be its own kind of disrespect. | G: 2, S: 1 | Gryffindor (2): honest to the point of bluntness, out of respect. Slytherin (1): you read candour as the genuinely useful move. |
-| Lead with what genuinely works, then raise the hard parts with care. | H: 2, G: 1 | Hufflepuff (2): truth delivered kindly, cushioned with care. Gryffindor (1): you still tell them the hard thing. |
+| Lead with what genuinely works, then raise the hard parts with care. | H: 2, S: 1 | Hufflepuff (2): truth delivered kindly, cushioned with care. Slytherin (1): choosing how a hard truth lands is deliberate craft — framing is a tool. |
 | Ask the questions that walk them to the problem themselves. | R: 2, H: 1 | Ravenclaw (2): the Socratic route to the insight. Hufflepuff (1): a gentle path that lets them keep their footing. |
 | Read what they're really after before deciding how much to say. | S: 2, R: 1 | Slytherin (2): you gauge the real need before deciding what to say. Ravenclaw (1): modelling what they actually want from you. |
 

@@ -228,8 +228,8 @@ const QUESTIONS = [
     answers: [
       { text: "The freedom to choose your own path, even when you choose badly.", scores: { G: 2, R: 1 },
         why: "Gryffindor (2): liberty is the cause worth the fight. Ravenclaw (1): especially the freedom to think for yourself." },
-      { text: "A fair shot for the people who never seem to get one.", scores: { H: 2, S: 1 },
-        why: "Hufflepuff (2): fairness for the overlooked. Slytherin (1): a protective instinct for those without leverage." },
+      { text: "A fair shot for the people who never seem to get one.", scores: { H: 2, G: 1 },
+        why: "Hufflepuff (2): fairness for the overlooked. Gryffindor (1): standing up for people who can't fight back is courage in its plainest form." },
       { text: "The truth of a thing, whatever it turns out to be.", scores: { R: 2, G: 1 },
         why: "Ravenclaw (2): truth is the fundamental value. Gryffindor (1): and it takes courage to face it unflinching." },
       { text: "A wall around the few people who are truly yours.", scores: { S: 2, H: 1 },
@@ -271,8 +271,8 @@ const QUESTIONS = [
     type: 'Hypothetical',
     text: "You find out you have one year to live. You spend it…",
     answers: [
-      { text: "Doing all the things you were always too afraid to do.", scores: { G: 2, R: 1 },
-        why: "Gryffindor (2): facing every fear while there's still time. Ravenclaw (1): a hunger for the experiences you'd been missing." },
+      { text: "Settling your unfinished business out loud — the apology you owed, the wrong you never called out, the truth you never told.", scores: { G: 2, R: 1 },
+        why: "Gryffindor (2): spending the year facing the things that took nerve, not the things that took time. Ravenclaw (1): the untold truth still needs telling." },
       { text: "Making sure the people you love will be steady long after you're gone.", scores: { H: 2, R: 1 },
         why: "Hufflepuff (2): their wellbeing comes before your own experience. Ravenclaw (1): and you plan it out carefully." },
       { text: "Getting everything you've figured out down on paper before it's lost.", scores: { R: 2, G: 1 },
@@ -316,8 +316,8 @@ const QUESTIONS = [
     type: 'Introspective',
     text: "When someone repeatedly underestimates you, you feel…",
     answers: [
-      { text: "A pull to prove them wrong somewhere everyone can see it.", scores: { G: 2, S: 1 },
-        why: "Gryffindor (2): you answer the slight out loud, in the open. Slytherin (1): a competitive drive to win the standing back." },
+      { text: "An itch to go do the exact thing they say you can't — no speeches, just the doing.", scores: { G: 2, S: 1 },
+        why: "Gryffindor (2): defiance answered with action, not argument. Slytherin (1): there's a quiet competitive fire in it all the same." },
       { text: "Unbothered — what they think doesn't touch what you know about yourself.", scores: { H: 2, G: 1 },
         why: "Hufflepuff (2): grounded, quiet self-worth. Gryffindor (1): a steady certainty in who you are." },
       { text: "Curious about what's making them read you that way.", scores: { R: 2, S: 1 },
@@ -363,8 +363,8 @@ const QUESTIONS = [
     answers: [
       { text: "Give it to them straight. Softening it would be its own kind of disrespect.", scores: { G: 2, S: 1 },
         why: "Gryffindor (2): honest to the point of bluntness, out of respect. Slytherin (1): you read candour as the genuinely useful move." },
-      { text: "Lead with what genuinely works, then raise the hard parts with care.", scores: { H: 2, G: 1 },
-        why: "Hufflepuff (2): truth delivered kindly, cushioned with care. Gryffindor (1): you still tell them the hard thing." },
+      { text: "Lead with what genuinely works, then raise the hard parts with care.", scores: { H: 2, S: 1 },
+        why: "Hufflepuff (2): truth delivered kindly, cushioned with care. Slytherin (1): choosing how a hard truth lands is deliberate craft — framing is a tool." },
       { text: "Ask the questions that walk them to the problem themselves.", scores: { R: 2, H: 1 },
         why: "Ravenclaw (2): the Socratic route to the insight. Hufflepuff (1): a gentle path that lets them keep their footing." },
       { text: "Read what they're really after before deciding how much to say.", scores: { S: 2, R: 1 },

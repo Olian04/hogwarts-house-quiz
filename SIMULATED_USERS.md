@@ -180,3 +180,34 @@ and R "truth" options. Every house's answers cohere around one value except
 Gryffindor's, which encode two — that's why G loses its dual matchups and why
 the morally-brave sort weakest. Both probes still sorted Gryffindor, so this is
 a calibration note, not a failure: 12/12 across the full panel.
+
+### Run 2 — 2026-07-01 (quiz v15, after the Gryffindor recalibration) — 12/12
+
+The recalibration (see QUIZ.md / quiz-data.js history): Q13's bucket-list answer
+rewritten to unfinished moral business, Q16's public-vindication answer
+rewritten to defiance-by-doing, Q10's "fair shot for the overlooked" secondary
+re-motivated S→G (protective courage), compensated by Q19's tactful-delivery
+secondary G→S (framing as craft) so the 7/7/6 matrix is unchanged.
+
+| User   | Expected  | Result     |  G% |  H% |  R% |  S% | G% (run 1) | Verdict |
+|--------|-----------|------------|----:|----:|----:|----:|-----------:|---------|
+| Jonas  | G         | Gryffindor |  70 |  30 |  25 |  25 |         63 | HIT     |
+| Maria  | H         | Hufflepuff |  30 |  90 |  13 |  18 |         25 | HIT     |
+| Priya  | R         | Ravenclaw  |  23 |  10 |  90 |  28 |         23 | HIT     |
+| Viktor | S         | Slytherin  |  18 |  18 |  28 |  88 |         18 | HIT     |
+| Sofia  | G+H       | Hufflepuff |  35 |  63 |  30 |  23 |         30 | HIT     |
+| David  | G+R       | Gryffindor |  57 |  28 |  45 |  20 |         43 | HIT     |
+| Amara  | G+S       | Slytherin  |  25 |  30 |  38 |  57 |         25 | HIT     |
+| Henrik | H+R       | Hufflepuff |  20 |  57 |  40 |  33 |         20 | HIT     |
+| Linnea | H+S       | Hufflepuff |  10 |  78 |  18 |  45 |         13 | HIT     |
+| Oskar  | R+S       | Ravenclaw  |  20 |  13 |  70 |  48 |         20 | HIT     |
+| Ruben  | G (daring)| Gryffindor |  83 |  23 |  20 |  25 |         83 | HIT     |
+| Ingrid | G (moral) | Gryffindor |  57 |  33 |  43 |  18 |         53 | HIT     |
+
+Effect: the moral-courage Gryffindors all moved up (Jonas 63→70, Ingrid 53→57
+with her runner-up gap widening from 10 to 14 points, David 43→57 — Gryffindor
+now *wins* a dual matchup for the first time), the daring Gryffindor held at 83,
+and no other house regressed (Maria 90, Priya 90, Viktor 88). All balance
+invariants verified after the change: primaries one-per-house per question,
+secondaries 20 per house in a symmetric 7/7/6 matrix, all ceilings 40,
+deterministic all-X still 100/18/18/15.
