@@ -482,8 +482,9 @@ body::before {
 }
 
 /* Subtle home-style control (matches the result page's "Back to start"), so the
-   About page doesn't end on a heavy gold primary button. */
-.about-home { display: flex; margin: 1.8rem auto 0; }
+   About page doesn't end on a heavy gold primary button. Generous top margin so
+   it reads as a separate footer action, not attached to the sponsor button. */
+.about-home { display: flex; margin: 3rem auto 0; }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    QUIZ VIEW
